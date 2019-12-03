@@ -11,12 +11,28 @@ struct Player {
 	float y;
 	bool up, down, right, left;
 };
+struct Bullet
+{
+	float velX;
+	float velY;
+	float x;
+	float y;
+};
+
+const float PLAYER_DIAMETER = 1.0f;
+const float BULLET_DIAMETER = 1.0f;
+
+float calcDistance(float x1, float y1, float x2, float y2)
+{
+	return sqrt(((x2-x1)*(x2-x1)) + ((y2-y1)*(y2-y1)));
+}
 
 unsigned int numPlayersConnected = 0;
 
 std::vector<Player> mPlayers;
+std::vector<Bullet> mBullets;
 
-const float UPDATES_PER_SEC = 60;
+const float UPDATES_PER_SEC = 5;
 std::clock_t curr;
 std::clock_t prev;
 double elapsed_secs;
@@ -111,6 +127,20 @@ void UDPServer::Update(void)
 	prev = curr;
 
 	UpdatePlayers();
+
+	//Get if a player has been hit
+	for (Bullet b : mBullets)
+	{
+		b.x += b.velX;
+		b.y += b.velY;
+		for (Player p : mPlayers)
+		{
+			if (calcDistance(p.x, p.y, b.x, b.y) < BULLET_DIAMETER + PLAYER_DIAMETER)
+			{
+				//TODO: Player was shot
+			}
+		}
+	}
 	BroadcastUpdate();
 }
 
