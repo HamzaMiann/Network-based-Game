@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{AC89A0D6-36A9-4B42-948D-5A55BA436D9A}</ProjectGuid>
+    <RootNamespace>GDP201920</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GameClient</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib/Debug64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib\Release64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib/Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib/Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glfw3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(ProjectDir)lib\$(Configuration)\fmod.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glfw3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(ProjectDir)lib\$(Configuration)64\fmod.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(ProjectDir)lib\$(Configuration)\fmod.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(ProjectDir)lib\$(Configuration)64\fmod.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AudioEngine.cpp" />
+    <ClCompile Include="cAudioBuilder.cpp" />
+    <ClCompile Include="cAudioInputHandler.cpp" />
+    <ClCompile Include="cDebugRenderer.cpp" />
+    <ClCompile Include="cDebugRenderer_BuiltInShapes.cpp" />
+    <ClCompile Include="CErrorLog.cpp" />
+    <ClCompile Include="cGameObject.cpp" />
+    <ClCompile Include="cGLRenderStateHelper.cpp" />
+    <ClCompile Include="cLayoutBuilder.cpp" />
+    <ClCompile Include="cLayoutController.cpp" />
+    <ClCompile Include="cLightBuilder.cpp" />
+    <ClCompile Include="cLightController.cpp" />
+    <ClCompile Include="cLightManager.cpp" />
+    <ClCompile Include="cLowpassFilter.cpp" />
+    <ClCompile Include="cModelBuilder.cpp" />
+    <ClCompile Include="cModelLoader.cpp" />
+    <ClCompile Include="COpenGLError.cpp" />
+    <ClCompile Include="cParticleEffect.cpp" />
+    <ClCompile Include="cPhysicsInputHandler.cpp" />
+    <ClCompile Include="cSceneFactory.cpp" />
+    <ClCompile Include="cShader.cpp" />
+    <ClCompile Include="cShaderBuilder.cpp" />
+    <ClCompile Include="cShaderHelper.cpp" />
+    <ClCompile Include="cShaderManager.cpp" />
+    <ClCompile Include="cTextureBuilder.cpp" />
+    <ClCompile Include="cVAOManager.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="Mathf.cpp" />
+    <ClCompile Include="octree.cpp" />
+    <ClCompile Include="PhysicsEngine.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneLayoutSave.cpp" />
+    <ClCompile Include="SceneLightSave.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundGroup.cpp" />
+    <ClCompile Include="TextureManager\C24BitBMPpixel.cpp" />
+    <ClCompile Include="TextureManager\cBasicTextureManager.cpp" />
+    <ClCompile Include="TextureManager\CTextureFromBMP.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cAABB.h" />
+    <ClInclude Include="AudioEngine.hpp" />
+    <ClInclude Include="cLowpassFilter.h" />
+    <ClInclude Include="cParticleEffect.h" />
+    <ClInclude Include="cTextureBuilder.h" />
+    <ClInclude Include="fmod_helper.h" />
+    <ClInclude Include="cAudioBuilder.h" />
+    <ClInclude Include="cAudioInputHandler.h" />
+    <ClInclude Include="cDebugRenderer.h" />
+    <ClInclude Include="CErrorLog.h" />
+    <ClInclude Include="cGameObject.h" />
+    <ClInclude Include="cGLRenderStateHelper.h" />
+    <ClInclude Include="cLayoutBuilder.h" />
+    <ClInclude Include="cLayoutController.h" />
+    <ClInclude Include="cLightBuilder.h" />
+    <ClInclude Include="cLightController.h" />
+    <ClInclude Include="cMesh.h" />
+    <ClInclude Include="cModelBuilder.h" />
+    <ClInclude Include="cModelLoader.h" />
+    <ClInclude Include="COpenGLError.h" />
+    <ClInclude Include="cPhysicsInputHandler.h" />
+    <ClInclude Include="cSceneFactory.h" />
+    <ClInclude Include="cShaderBuilder.h" />
+    <ClInclude Include="cShaderHelper.h" />
+    <ClInclude Include="cShaderManager.h" />
+    <ClInclude Include="cVAOManager.h" />
+    <ClInclude Include="GLCommon.h" />
+    <ClInclude Include="iDebugRenderer.h" />
+    <ClInclude Include="iInputHandler.h" />
+    <ClInclude Include="iSceneBuilder.h" />
+    <ClInclude Include="cLightManager.h" />
+    <ClInclude Include="Mathf.h" />
+    <ClInclude Include="octree.h" />
+    <ClInclude Include="PhysicsEngine.h" />
+    <ClInclude Include="rapid_definitions.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="sLight.h" />
+    <ClInclude Include="TextureManager\C24BitBMPpixel.h" />
+    <ClInclude Include="TextureManager\cBasicTextureManager.h" />
+    <ClInclude Include="TextureManager\CTextureFromBMP.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\basic_frag.glsl" />
+    <None Include="assets\shaders\basic_vert.glsl" />
+    <None Include="assets\shaders\bump_frag.glsl" />
+    <None Include="assets\shaders\bump_vert.glsl" />
+    <None Include="assets\shaders\holo_frag.glsl" />
+    <None Include="assets\shaders\particle_frag.glsl" />
+    <None Include="assets\shaders\particle_vert.glsl" />
+    <None Include="assets\shaders\skybox_frag.glsl" />
+    <None Include="assets\shaders\skybox_vert.glsl" />
+    <None Include="assets\shaders\specular_frag.glsl" />
+    <None Include="assets\shaders\specular_vert.glsl" />
+    <None Include="assets\shaders\holo_vert.glsl" />
+    <None Include="assets\shaders\water_frag.glsl" />
+    <None Include="assets\shaders\water_vert.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="assets\scenes\water.scene.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="assets\scenes\media.scene.xml" />
+    <Xml Include="assets\scenes\physics.scene.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="assets\scenes\scene1.scene.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <!-- MIDTERM CODE BELOW -->
+  <ItemGroup>
+    <Models Include="assets/models/sphere_XYZ_N.ply" />
+    <Models Include="assets/models/plane_XYZ_N.ply" />
+    <Models Include="assets/models/cube_XYZ_N.ply" />
+    <Models Include="assets/models/plane_wall1_XYZ_N.ply" />
+    <Models Include="assets/models/plane_wall2_XYZ_N.ply" />
+    <Models Include="assets/models/plane_angle_XYZ_N.ply" />
+    <Models Include="assets/models/rectangle_XYZ_N.ply" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shaders Include="assets/shaders/vertexShader02.glsl" />
+    <Shaders Include="assets/shaders/fragmentShader02.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Scenes Include="assets/scenes/physics.scene.xml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <OutputDirectory>c:\CND\midterm\Mian_Hamza_Midterm\</OutputDirectory>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ShadersDirectory>$(OutputDirectory)assets\shaders\</ShadersDirectory>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ModelsDirectory>$(OutputDirectory)assets\models\</ModelsDirectory>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ScenesDirectory>$(OutputDirectory)assets\scenes\</ScenesDirectory>
+  </PropertyGroup>
+  <Target Name="midterm" DependsOnTargets="Clean;Build" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Message Importance="High" Text="DONE BUILD!" />
+    <MakeDir Directories="$(OutputDirectory)" />
+    <Copy SourceFiles="$(OutDir)$(TargetName)$(TargetExt)" DestinationFolder="$(OutputDirectory)" />
+    <Copy SourceFiles="$(OutDir)fmod.dll" DestinationFolder="$(OutputDirectory)" />
+    <Copy SourceFiles="@(Scenes)" DestinationFolder="$(ScenesDirectory)" />
+    <Copy SourceFiles="@(Shaders)" DestinationFolder="$(ShadersDirectory)" />
+    <Copy SourceFiles="@(Models)" DestinationFolder="$(ModelsDirectory)" />
+  </Target>
+  <!-- MIDTERM CODE ABOVE -->
+</Project>

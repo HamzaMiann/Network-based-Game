@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<Scene name="Graphics Project 1">
+	
+	<Shader>
+		<Vertex file="vertexShader02.glsl"/>
+		<Fragment file="fragmentShader02.glsl"/>
+	</Shader>
+	<Lights>
+		<Light>
+			<Position x="0.399999" y="-1.099998" z="0.000001" w="1.000000"/>
+			<Diffuse x="0.800000" y="0.000006" z="0.100000" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.800000" y="3.919188" z="1.449285" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="4.199997" y="-1.099998" z="-3.899997" w="1.000000"/>
+			<Diffuse x="0.800000" y="0.000006" z="0.100000" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.800000" y="3.919188" z="1.449285" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="-3.500000" y="-1.099998" z="-3.799998" w="1.000000"/>
+			<Diffuse x="0.800000" y="0.000006" z="0.100000" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.800000" y="3.919188" z="1.449285" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="0.399999" y="-1.099998" z="-7.799994" w="1.000000"/>
+			<Diffuse x="0.800000" y="0.000006" z="0.100000" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.800000" y="3.919188" z="1.449285" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="-2.800001" y="0.900002" z="-3.999998" w="1.000000"/>
+			<Diffuse x="0.844189" y="0.882277" z="1.002243" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.744650" y="7.573481" z="10.027122" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="3.299998" y="0.700002" z="-4.199997" w="1.000000"/>
+			<Diffuse x="0.844189" y="0.881981" z="1.048083" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.744650" y="7.802686" z="0.000001" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="4.999997" y="-2.099998" z="-4.799997" w="1.000000"/>
+			<Diffuse x="0.800000" y="0.000006" z="0.100000" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.800000" y="3.919188" z="1.449285" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="-4.199999" y="-2.099998" z="-2.999999" w="1.000000"/>
+			<Diffuse x="0.800000" y="0.000006" z="0.100000" w="1.000000"/>
+			<Specular x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Atten x="0.800000" y="3.919188" z="1.449285" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+		<Light>
+			<Position x="0.399999" y="3.300001" z="-4.099998" w="1.000000"/>
+			<Diffuse x="0.056270" y="1.086704" z="0.106625" w="1.000000"/>
+			<Specular x="0.103517" y="1.271930" z="0.104056" w="1.000000"/>
+			<Atten x="0.800000" y="1.256502" z="0.000010" w="1000.000000"/>
+			<Direction x="0.000000" y="0.000000" z="0.000000" w="0.000000"/>
+			<Param1 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<Param2 x="0.000000" y="1.000000" z="1.000000" w="1.000000"/>
+		</Light>
+	</Lights>
+	<Models>
+		<Model file="sphere_XYZ_N.ply" friendlyName="sphere"/>
+		<Model file="cube_XYZ_N.ply" friendlyName="cube"/>
+		<Model file="plane_XYZ_N.ply" friendlyName="plane_ground"/>
+		<Model file="plane_wall1_XYZ_N.ply" friendlyName="plane_wall"/>
+		<Model file="plane_wall2_XYZ_N.ply" friendlyName="plane_wall2"/>
+		<Model file="plane_angle_XYZ_N.ply" friendlyName="plane_angle"/>
+		<Model file="boxer_XYZ_N.ply" friendlyName="boxer"/>
+		<Model file="kick_stance_XYZ_N.ply" friendlyName="fighter"/>
+		<Model file="arena_XYZ_N.ply" friendlyName="arena"/>
+		<Model file="boxingring_XYZ_N.ply" friendlyName="ring"/>
+	</Models>
+	<Layout>
+		<GameObject mesh="plane_ground" tag="">
+			<Position x="0.100000" y="-2.200000" z="0.200000"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="0.000000" z="0.000000" w="1.000000"/>
+			<SpecColour x="1.000000" y="0.500000" z="0.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>100.000000</Scale>
+			<SpecIntensity>1.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>MESH</Collider>
+		</GameObject>
+		<GameObject mesh="sphere" tag="">
+			<Position x="4.599998" y="0.300004" z="-3.900000"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<SpecColour x="0.800000" y="0.500000" z="0.100000"/>
+			<Velocity x="0.100000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.273907</Scale>
+			<SpecIntensity>100.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="sphere" tag="">
+			<Position x="0.300000" y="0.300004" z="0.199998"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<SpecColour x="0.800000" y="0.500000" z="0.100000"/>
+			<Velocity x="0.100000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.273907</Scale>
+			<SpecIntensity>100.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="sphere" tag="">
+			<Position x="-3.799998" y="0.300004" z="-4.100000"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<SpecColour x="0.800000" y="0.500000" z="0.100000"/>
+			<Velocity x="0.100000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.273907</Scale>
+			<SpecIntensity>100.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="sphere" tag="">
+			<Position x="0.500000" y="0.300004" z="-8.199997"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<SpecColour x="0.800000" y="0.500000" z="0.100000"/>
+			<Velocity x="0.100000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.273907</Scale>
+			<SpecIntensity>100.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="boxer" tag="">
+			<Position x="2.800000" y="-1.500000" z="-3.999999"/>
+			<Rotation x="4.700000" y="4.199999" z="0.000000"/>
+			<Colour x="0.200000" y="0.100000" z="0.800000" w="1.000000"/>
+			<SpecColour x="1.000000" y="1.000000" z="1.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.231646</Scale>
+			<SpecIntensity>100.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="arena" tag="">
+			<Position x="0.300000" y="-3.299999" z="-3.999999"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="0.000000" z="0.000000" w="1.000000"/>
+			<SpecColour x="1.000000" y="1.000000" z="1.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.690469</Scale>
+			<SpecIntensity>1.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="fighter" tag="">
+			<Position x="-2.200000" y="-1.200000" z="-3.999999"/>
+			<Rotation x="-1.800000" y="-2.200000" z="0.200000"/>
+			<Colour x="0.100000" y="0.400000" z="0.100000" w="1.000000"/>
+			<SpecColour x="1.000000" y="1.000000" z="1.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.012086</Scale>
+			<SpecIntensity>100.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="ring" tag="">
+			<Position x="0.400000" y="-2.200000" z="-3.999999"/>
+			<Rotation x="0.000000" y="0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="0.000000" z="0.000000" w="1.000000"/>
+			<SpecColour x="1.000000" y="1.000000" z="1.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.630249</Scale>
+			<SpecIntensity>1.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="cube" tag="">
+			<Position x="-3.799998" y="-2.100000" z="-3.399999"/>
+			<Rotation x="0.000000" y="-0.800000" z="0.000000"/>
+			<Colour x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<SpecColour x="1.000000" y="1.000000" z="1.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.377353</Scale>
+			<SpecIntensity>1.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+		<GameObject mesh="cube" tag="">
+			<Position x="4.499998" y="-2.000000" z="-4.599998"/>
+			<Rotation x="0.000000" y="-0.800000" z="0.000000"/>
+			<Colour x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
+			<SpecColour x="1.000000" y="1.000000" z="1.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>0.340561</Scale>
+			<SpecIntensity>1.000000</SpecIntensity>
+			<IMass>0.000000</IMass>
+			<Collider>NONE</Collider>
+		</GameObject>
+	</Layout>
+  <Audio API="FMOD">
+    <Sound file="music_game.mp3" volume="1.0" pitch="0.5" pan="0" streamed="true" friendlyName="music"/>
+    <Sound file="effect_rain.mp3" volume="0.5" pitch="1.0" pan="0.0" streamed="true" friendlyName="rain"/>
+    <Sound file="effect_bounce.wav" volume="1.0" pitch="1.0" pan="0.0" streamed="false" friendlyName="bounce"/>
+    <Sound file="effect_ball_hit.wav" volume="1.0" pitch="1.0" pan="0.0" streamed="false" friendlyName="ball"/>
+    <Sound file="respawn_2.mp3" volume="0.5" pitch="1.5" pan="0.0" streamed="false" friendlyName="respawn"/>
+  </Audio>
+</Scene>
+

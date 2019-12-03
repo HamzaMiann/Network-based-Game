@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ModelLoading">
+      <UniqueIdentifier>{d26fe758-32e4-4fc5-9fde-31d38e3f3272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math_Physics">
+      <UniqueIdentifier>{6b6bae64-520f-44be-a760-2d81bbda3a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{766d50ee-3cad-4fc8-8f22-5c093afefc52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL">
+      <UniqueIdentifier>{095059cd-19d3-4b36-9d09-7a5f6496f28b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFactory">
+      <UniqueIdentifier>{08f8af5a-02bc-47a5-bef7-b4859ed1e31d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFactory\Scenes">
+      <UniqueIdentifier>{fb2c66ba-bf07-4373-a7a0-594479cbe915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFactory\SceneBuilders">
+      <UniqueIdentifier>{ce655aa6-b4c7-410f-8833-4c5a63fba248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputHandler">
+      <UniqueIdentifier>{5f9ed9df-aca8-41f0-976c-5a1bff395e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lighting">
+      <UniqueIdentifier>{2676027c-668c-4c0c-9c0a-7e4ef57e40da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugRenderer">
+      <UniqueIdentifier>{aad5e934-7cc7-4c00-9524-7c82189dc4ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputHandler\Handlers">
+      <UniqueIdentifier>{ff060f73-92b9-45d6-adb6-f69f134d3be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShadersRendering">
+      <UniqueIdentifier>{7c9cae8b-1453-4fc5-b0b1-fc3b21c534b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShadersRendering\GLSL">
+      <UniqueIdentifier>{02dde2e9-2e21-4d3a-b295-98e0b8f9b639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{213c6421-8265-4231-a622-ef4e67f10c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TextureManager">
+      <UniqueIdentifier>{cf169bf7-b804-431b-82da-c71dcec809ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{2f3967a1-8a18-4c94-8fad-f6575f268d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{fb9bda39-b92d-4c37-9bcc-5aa3415b2edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LowpassFilter">
+      <UniqueIdentifier>{df56137b-7c65-442d-af5b-c025a514f384}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cShader.cpp">
+      <Filter>ShadersRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="cShaderManager.cpp">
+      <Filter>ShadersRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="cShaderHelper.cpp">
+      <Filter>ShadersRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="cVAOManager.cpp">
+      <Filter>ModelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="cModelLoader.cpp">
+      <Filter>ModelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioEngine.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Math_Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="cAudioBuilder.cpp">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneFactory.cpp">
+      <Filter>SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="cModelBuilder.cpp">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="cShaderBuilder.cpp">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="cLayoutBuilder.cpp">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightManager.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="cDebugRenderer.cpp">
+      <Filter>DebugRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="cDebugRenderer_BuiltInShapes.cpp">
+      <Filter>DebugRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CErrorLog.cpp">
+      <Filter>DebugRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="cGLRenderStateHelper.cpp">
+      <Filter>DebugRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="COpenGLError.cpp">
+      <Filter>DebugRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightBuilder.cpp">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="cAudioInputHandler.cpp">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="cPhysicsInputHandler.cpp">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightController.cpp">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLightSave.cpp">
+      <Filter>SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="cLayoutController.cpp">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLayoutSave.cpp">
+      <Filter>SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundGroup.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>ShadersRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="octree.cpp">
+      <Filter>Math_Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager\cBasicTextureManager.cpp">
+      <Filter>TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager\CTextureFromBMP.cpp">
+      <Filter>TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager\C24BitBMPpixel.cpp">
+      <Filter>TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cTextureBuilder.cpp">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="cParticleEffect.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cLowpassFilter.cpp">
+      <Filter>LowpassFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathf.cpp">
+      <Filter>Math_Physics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cShaderManager.h">
+      <Filter>ShadersRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="cShaderHelper.h">
+      <Filter>ShadersRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="cVAOManager.h">
+      <Filter>ModelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="cModelLoader.h">
+      <Filter>ModelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Math_Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Mathf.h">
+      <Filter>Math_Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioEngine.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="GLCommon.h">
+      <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>SceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneFactory.h">
+      <Filter>SceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iSceneBuilder.h">
+      <Filter>SceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="cAudioBuilder.h">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="cModelBuilder.h">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="cShaderBuilder.h">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="iInputHandler.h">
+      <Filter>InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="cLayoutBuilder.h">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="sLight.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightManager.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="cDebugRenderer.h">
+      <Filter>DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CErrorLog.h">
+      <Filter>DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="cGLRenderStateHelper.h">
+      <Filter>DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="COpenGLError.h">
+      <Filter>DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="iDebugRenderer.h">
+      <Filter>DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightBuilder.h">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="cAudioInputHandler.h">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="cPhysicsInputHandler.h">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightController.h">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="rapid_definitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cLayoutController.h">
+      <Filter>InputHandler\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="cMesh.h">
+      <Filter>ModelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_helper.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="octree.h">
+      <Filter>Math_Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>ShadersRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="cAABB.h">
+      <Filter>Math_Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager\C24BitBMPpixel.h">
+      <Filter>TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager\cBasicTextureManager.h">
+      <Filter>TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager\CTextureFromBMP.h">
+      <Filter>TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cTextureBuilder.h">
+      <Filter>SceneFactory\SceneBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="cParticleEffect.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cLowpassFilter.h">
+      <Filter>LowpassFilter</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\holo_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\holo_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\specular_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\specular_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\particle_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\particle_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\bump_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\bump_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\basic_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\basic_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\skybox_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\skybox_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\water_frag.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+    <None Include="assets\shaders\water_vert.glsl">
+      <Filter>ShadersRendering\GLSL</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="assets\scenes\scene1.scene.xml">
+      <Filter>SceneFactory\Scenes</Filter>
+    </Xml>
+    <Xml Include="assets\scenes\physics.scene.xml">
+      <Filter>SceneFactory\Scenes</Filter>
+    </Xml>
+    <Xml Include="assets\scenes\media.scene.xml">
+      <Filter>SceneFactory\Scenes</Filter>
+    </Xml>
+    <Xml Include="assets\scenes\water.scene.xml">
+      <Filter>SceneFactory\Scenes</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
