@@ -1,4 +1,5 @@
 #include <conio.h>
+
 #include "GameServer.h"
 
 int main(int argc, char** argv)
@@ -6,7 +7,7 @@ int main(int argc, char** argv)
 	UDPServer server;
 	int ch;
 
-	while (true)
+	while (1)
 	{
 		if (_kbhit())
 		{
@@ -16,5 +17,6 @@ int main(int argc, char** argv)
 		}
 		server.Update();
 	}
+
 	return 0;
 }

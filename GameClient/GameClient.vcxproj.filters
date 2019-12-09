@@ -67,6 +67,9 @@
     <Filter Include="LowpassFilter">
       <UniqueIdentifier>{df56137b-7c65-442d-af5b-c025a514f384}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{f88ba3e2-2127-4df2-a165-2b3620bc080e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cShader.cpp">
@@ -188,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="Mathf.cpp">
       <Filter>Math_Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="UDPClient.cpp">
+      <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="cLowpassFilter.h">
       <Filter>LowpassFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPClient.h">
+      <Filter>Networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

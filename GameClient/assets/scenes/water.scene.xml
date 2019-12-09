@@ -1,30 +1,38 @@
 <?xml version="1.0"?>
 <Scene name="Experimental">
+  
 	<Shaders>
+    
 		<Shader name="basic">
 			<Vertex file="basic_vert.glsl"/>
 			<Fragment file="basic_frag.glsl"/>
 		</Shader>
+    
 		<Shader name="hologram">
 			<Vertex file="holo_vert.glsl"/>
 			<Fragment file="holo_frag.glsl"/>
 		</Shader>
+    
     <Shader name="specular">
 			<Vertex file="specular_vert.glsl"/>
 			<Fragment file="specular_frag.glsl"/>
 		</Shader>
+    
     <Shader name="particle">
 			  <Vertex file="particle_vert.glsl"/>
 			  <Fragment file="particle_frag.glsl"/>
 	  </Shader>
+    
     <Shader name="bump">
       <Vertex file="bump_vert.glsl"/>
       <Fragment file="bump_frag.glsl"/>
     </Shader>
+    
     <Shader name="water">
       <Vertex file="water_vert.glsl"/>
       <Fragment file="water_frag.glsl"/>
     </Shader>
+    
 	</Shaders>
   
 	<Textures>
@@ -46,9 +54,9 @@
 		<Texture name="Water_001_SPEC.bmp"/>
 		<Texture name="WATER_BUMP.bmp"/>
 	</Textures>
+  
 	<Models>
 		<Model file="Sphere_Radius_1_XYZ_n_uv.ply" friendlyName="sphere" shader="basic"/>
-		<Model file="Plane_Large_XYZ_N_UV.ply" friendlyName="sphere_water" shader="water"/>
 		<Model file="sphere_XYZ_N_UV.ply" friendlyName="sphere_static" shader="hologram"/>
 		<Model file="sphere_XYZ_N_UV.ply" friendlyName="sphere_particle" shader="particle"/>
 		<Model file="cube_XYZ_N_UV.ply" friendlyName="cube" shader="basic"/>
@@ -59,6 +67,7 @@
 		<Model file="low poly buildings2_XYZ_N_UV.ply" friendlyName="buildings2" shader="basic"/>
 		<Model file="Mercury_XYZ_N_UV.ply" friendlyName="mercury" shader="bump"/>
 	</Models>
+  
 	<Lights>
     <Light>
 			<Position x="0.000000" y="23.900057" z="5.000000" w="1.000000"/>
@@ -124,6 +133,7 @@
 			<Param2 x="1.000000" y="1.000000" z="1.000000" w="1.000000"/>
 		</Light>
 	</Lights>
+  
 	<Layout>
     
 		<GameObject mesh="ship" tag="player" shader="basic">
@@ -168,22 +178,6 @@
       <Texture ratio="1.000000">Ground_Dirt_007_ambientOcclusion.bmp</Texture>
 		</GameObject>
     
-    <GameObject mesh="sphere_water" tag="water" shader="water">
-      <Position x="0.000000" y="10.000000" z="0.000000"/>
-      <Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-      <Colour x="1.000000" y="0.900000" z="0.300000" w="1.000000"/>
-      <SpecColour x="0.700000" y="0.700000" z="0.700000"/>
-      <Velocity x="0.000000" y="0.000000" z="0.000000"/>
-      <Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-      <Scale>1.000000</Scale>
-      <SpecIntensity>10.000000</SpecIntensity>
-      <IMass>1.000000</IMass>
-      <Collider>NONE</Collider>
-      <Texture ratio="1.000000">Water_001_COLOR.bmp</Texture>
-      <Texture ratio="1.000000">WATER_BUMP.bmp</Texture>
-      <Texture ratio="1.000000">Water_001_NORM.bmp</Texture>
-      <Texture ratio="1.000000">Water_001_SPEC.bmp</Texture>
-    </GameObject>
     
 		<GameObject mesh="buildings" tag="buildings" shader="basic">
 			<Position x="0.000000" y="0.000000" z="0.000000"/>

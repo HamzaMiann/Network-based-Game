@@ -1,7 +1,7 @@
 #ifndef _cGLRenderStateHelper_HG_
 #define _cGLRenderStateHelper_HG_
 
-#include "../GLCommon.h"
+#include "GLCommon.h"
 #include <string>
 
 class cGLRenderStateHelper

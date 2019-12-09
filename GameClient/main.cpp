@@ -31,6 +31,7 @@
 #include "TextureManager/cBasicTextureManager.h"
 #include "cParticleEffect.h"
 #include "cLowpassFilter.h"
+#include "UDPClient.h"
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 800
@@ -160,9 +161,9 @@ int main(void)
 	std::string errorString;
 	textureManager->SetBasePath("assets/textures/cubemaps/");
 	if (textureManager->CreateCubeTextureFromBMPFiles("space",
-													  "TropicalSunnyDayRight2048.bmp", "TropicalSunnyDayLeft2048.bmp",
-													  "TropicalSunnyDayUp2048.bmp", "TropicalSunnyDayDown2048.bmp",
-													  "TropicalSunnyDayFront2048.bmp", "TropicalSunnyDayBack2048.bmp", true, errorString))
+													  "SpaceBox_right1_posX.bmp", "SpaceBox_left2_negX.bmp",
+													  "SpaceBox_top3_posY.bmp", "SpaceBox_bottom4_negY.bmp",
+													  "SpaceBox_front5_posZ.bmp", "SpaceBox_back6_negZ.bmp", true, errorString))
 	{
 		scene = Scene::LoadFromXML("water.scene.xml");
 		pSkyBoxSphere->pos = glm::vec3(0.f);
@@ -243,6 +244,10 @@ int main(void)
 	sphere->texture[0] = ship->texture[0];
 	sphere->textureRatio[0] = 1.f;
 
+	UDPClient* mClient = UDPClient::Instance();
+
+	mClient->CreateSocket("127.0.0.1", 5150);
+
 	cLowpassFilter* filter = cLowpassFilter::Instance();
 	float current_time = (float)glfwGetTime();
 	float previous_time = (float)glfwGetTime();
@@ -262,23 +267,6 @@ int main(void)
 			delta_time = 0.f;
 		}
 
-		// Average out the delta time to avoid randoms
-		//-------------------------------------------------
-		/*time_buffer.push_back(current_time - previous_time);
-		if (time_buffer.size() > 50)
-			time_buffer.erase(time_buffer.begin());
-
-		float average = 0.f;
-		unsigned int k = 0;
-		for (; k < time_buffer.size(); ++k)
-		{
-			average += time_buffer[k];
-		}
-		average /= (float)k;
-
-		delta_time = average;*/
-		//------------------------------------------------
-
 		// Handle key inputs
 		HandleInput(window);
 
@@ -297,13 +285,11 @@ int main(void)
 		//  depth (or z) buffer.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-		//glClearColor(0.7f, 0.85f, 1.f, 1.f);
-		//glClearColor(0.7f, 0.85f, 1.f, 1.f);
-
 		glEnable(GL_BLEND);      // Enable blend or "alpha" transparency
-		//glDisable( GL_BLEND );
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		mClient->Update();
+		mClient->SetPosition(0, ship->pos.x, ship->pos.y, ship->pos.z, delta_time);
 
 		// Update the objects' physics
 		phys->CheckCollisions(scene, delta_time);

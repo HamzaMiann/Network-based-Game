@@ -2,113 +2,107 @@
 
 #include <winsock.h>
 #include <WS2tcpip.h>
+
 #include <ctime>
 
-struct Player {
-	unsigned short port;
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
+struct Player
+{
+	unsigned short port; // their id;
 	struct sockaddr_in si_other;
 	float x;
 	float y;
 	bool up, down, right, left;
 };
-struct Bullet
-{
-	float velX;
-	float velY;
-	float x;
-	float y;
-};
-
-const float PLAYER_DIAMETER = 1.0f;
-const float BULLET_DIAMETER = 1.0f;
-
-float calcDistance(float x1, float y1, float x2, float y2)
-{
-	return sqrt(((x2-x1)*(x2-x1)) + ((y2-y1)*(y2-y1)));
-}
 
 unsigned int numPlayersConnected = 0;
 
 std::vector<Player> mPlayers;
-std::vector<Bullet> mBullets;
 
-const float UPDATES_PER_SEC = 5;
+const float UPDATES_PER_SEC = 5;		// 5Hz / 200ms per update / 5 updates per second
 std::clock_t curr;
 std::clock_t prev;
 double elapsed_secs;
+
 
 void _PrintWSAError(const char* file, int line)
 {
 	int WSAErrorCode = WSAGetLastError();
 	wchar_t* s = NULL;
 	FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL, WSAErrorCode,
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPWSTR)&s, 0, NULL);
-	fprintf(stderr, "[WSAError:%d] %s\n", WSAErrorCode, s);
+				   NULL, WSAErrorCode,
+				   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+				   (LPWSTR)&s, 0, NULL);
+	fprintf(stderr, "[WSAError:%d] %S\n", WSAErrorCode, s);
 	LocalFree(s);
 }
 
 UDPServer::UDPServer(void)
-	:m_IsRunning(false),
-	m_ListenSocket(INVALID_SOCKET),
-	m_AcceptSocket(INVALID_SOCKET)
+	: mIsRunning(false)
+	, mListenSocket(INVALID_SOCKET)
+	, mAcceptSocket(INVALID_SOCKET)
 {
 	mPlayers.resize(8);
 
-	//WinSock vars
-	WSAData WSAData;
-	int iResult;
-	int Port = 5150;
+	// WinSock vars
+	WSAData		WSAData;
+	int			iResult;
+	int			Port = 5150;
 	SOCKADDR_IN ReceiverAddr;
 
-	//Initialize winsock
+	// Step #0 Initialize WinSock
 	iResult = WSAStartup(MAKEWORD(2, 2), &WSAData);
-	if (iResult != 0) {
+	if (iResult != 0)
+	{
 		PrintWSAError();
 		return;
 	}
 
-	//Create a socket
-	m_ListenSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if (m_ListenSocket == INVALID_SOCKET) {
+	// Step #1 Create a socket
+	mListenSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if (mListenSocket == INVALID_SOCKET)
+	{
 		PrintWSAError();
 		return;
 	}
 
-	//Bind socket
+	// Step #2 Bind our socket
 	ReceiverAddr.sin_family = AF_INET;
 	ReceiverAddr.sin_port = htons(Port);
 	ReceiverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	iResult = bind(m_ListenSocket, (SOCKADDR*)&ReceiverAddr, sizeof(ReceiverAddr));
-	if (iResult == SOCKET_ERROR) {
+	iResult = bind(mListenSocket, (SOCKADDR*)&ReceiverAddr, sizeof(ReceiverAddr));
+	if (iResult == SOCKET_ERROR)
+	{
 		PrintWSAError();
 		return;
 	}
 
-	//Set socket to nonblocking
-	SetNonBlocking(m_ListenSocket);
+	// Set our socket to be nonblocking
+	SetNonBlocking(mListenSocket);
 
-	//Server is ready
-	printf("[SERVER] Receiving IP: %s\n", inet_ntoa(ReceiverAddr.sin_addr));
+	// Our server is ready 
+	char ipbuf[INET_ADDRSTRLEN];
+	printf("[SERVER] Receiving IP: %s\n", inet_ntop(AF_INET, &ReceiverAddr.sin_addr, ipbuf, sizeof(ipbuf)));
 	printf("[SERVER] Receiving Port: %d\n", htons(ReceiverAddr.sin_port));
 	printf("[SERVER] Ready to receive a datagram...\n");
 
-	m_IsRunning = true;
+	mIsRunning = true;
 	prev = std::clock();
-}
+} // end UDPServer
 
 UDPServer::~UDPServer(void)
 {
-	closesocket(m_ListenSocket);
-	WSACleanup();
+	closesocket(mListenSocket);
+	WSACleanup();	// <-- Not necessary if quitting application, Windows will handle this.
 }
 
 void UDPServer::SetNonBlocking(SOCKET socket)
 {
 	ULONG NonBlock = 1;
 	int result = ioctlsocket(socket, FIONBIO, &NonBlock);
-	if (result == SOCKET_ERROR) {
+	if (result == SOCKET_ERROR)
+	{
 		PrintWSAError();
 		return;
 	}
@@ -116,31 +110,18 @@ void UDPServer::SetNonBlocking(SOCKET socket)
 
 void UDPServer::Update(void)
 {
-	if (!m_IsRunning) return;
+	if (!mIsRunning) return;
 
+	// TODO: ReadData, SendData
 	ReadData();
 
 	curr = std::clock();
 	elapsed_secs = (curr - prev) / double(CLOCKS_PER_SEC);
-	
+
 	if (elapsed_secs < (1.0f / UPDATES_PER_SEC)) return;
 	prev = curr;
 
 	UpdatePlayers();
-
-	//Get if a player has been hit
-	for (Bullet b : mBullets)
-	{
-		b.x += b.velX;
-		b.y += b.velY;
-		for (Player p : mPlayers)
-		{
-			if (calcDistance(p.x, p.y, b.x, b.y) < BULLET_DIAMETER + PLAYER_DIAMETER)
-			{
-				//TODO: Player was shot
-			}
-		}
-	}
 	BroadcastUpdate();
 }
 
@@ -148,12 +129,16 @@ void UDPServer::UpdatePlayers(void)
 {
 	for (int i = 0; i < numPlayersConnected; i++)
 	{
-		//TODO: Update each player
+		if (mPlayers[i].up) mPlayers[i].y += 10.0f * elapsed_secs;
+		if (mPlayers[i].down) mPlayers[i].y -= 10.0f * elapsed_secs;
+		if (mPlayers[i].right) mPlayers[i].x += 10.0f * elapsed_secs;
+		if (mPlayers[i].left) mPlayers[i].x -= 10.0f * elapsed_secs;
 	}
 }
 
 void UDPServer::BroadcastUpdate(void)
 {
+	// create our data to send, then send the same data to all players
 	const int DEFAULT_BUFLEN = 512;
 	char buffer[512];
 	memset(buffer, '\0', DEFAULT_BUFLEN);
@@ -162,24 +147,30 @@ void UDPServer::BroadcastUpdate(void)
 
 	for (int i = 0; i < numPlayersConnected; i++)
 	{
-		//TODO: add each new info
+		float x = mPlayers[i].x;
+		float y = mPlayers[i].y;
+		memcpy(&(buffer[i * 8 + 4]), &x, sizeof(float));
+		memcpy(&(buffer[i * 8 + 8]), &y, sizeof(float));
 	}
-	int result = sendto(m_ListenSocket, buffer, 12, 0,
+
+	int result = sendto(mListenSocket, buffer, 12, 0,
 		(struct sockaddr*) & (mPlayers[0].si_other), sizeof(mPlayers[0].si_other));
 }
 
+
+
 Player* GetPlayerByPort(unsigned short port, struct sockaddr_in si_other)
 {
-	//If a player with the port has already connect, return it
+	// If a player with this port is already connected, return it
 	for (int i = 0; i < mPlayers.size(); i++)
 	{
 		if (mPlayers[i].port == port) return &(mPlayers[i]);
 	}
 
-	//Otherwise create a new player
+	// Otherwise create a new player, and return that one!
 	mPlayers[numPlayersConnected].port = port;
-	//TODO: create default player variables
-
+	mPlayers[numPlayersConnected].x = 0.0f;
+	mPlayers[numPlayersConnected].y = 0.0f;
 	mPlayers[numPlayersConnected].si_other = si_other;
 	return &(mPlayers[numPlayersConnected++]);
 }
@@ -190,25 +181,37 @@ void UDPServer::ReadData(void)
 	int slen = sizeof(si_other);
 	char buffer[512];
 
-	int result = recvfrom(m_ListenSocket, buffer, 512, 0, (struct sockaddr*) & si_other, &slen);
-	if (result == SOCKET_ERROR) {
+	int result = recvfrom(mListenSocket, buffer, 512, 0, (struct sockaddr*) & si_other, &slen);
+	if (result == SOCKET_ERROR)
+	{
 		if (WSAGetLastError() == WSAEWOULDBLOCK)
 		{
+			// printf(".");		// Quick test
 			return;
 		}
 		PrintWSAError();
 
+		// For a TCP connection you would close this socket, and remove it from 
+		// your list of connections. For UDP we will clear our buffer, and just
+		// ignore this.
 		memset(buffer, '\0', 512);
 		return;
 	}
+
 
 	unsigned short port = si_other.sin_port;
 
 	Player* player = GetPlayerByPort(port, si_other);
 
-	//TODO: copy what commands player used into the buffer
+	player->up = buffer[0] == 1;
+	player->down = buffer[1] == 1;
+	player->right = buffer[2] == 1;
+	player->left = buffer[3] == 1;
 
+	printf("%d : %hu received { %d %d %d %d }\n", mListenSocket,
+		   port, player->up, player->down, player->right, player->left);
 
-	//TODO: Send data back to client
-
+	// Send the data back to the client
+	// result = sendto(mListenSocket, buffer, 1, 0, (struct sockaddr*) & si_other, sizeof(si_other));
 }
+

@@ -1,7 +1,7 @@
 #ifndef _COpenGLError_HG_
 #define _COpenGLError_HG_
 
-#include "../GLCommon.h"
+#include "GLCommon.h"
 #include <string>
 #include "CErrorLog.h"
 
