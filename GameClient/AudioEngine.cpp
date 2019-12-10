@@ -116,7 +116,7 @@ AUDIO_ID AudioEngine::Create_Sound(std::string filename, std::string friendlyNam
 	Sounds.push_back(newSound);
 	SoundNames.push_back(friendlyName);
 
-	return this->Sounds.size() - 1;
+	return (int)this->Sounds.size() - 1;
 }
 
 AUDIO_ID AudioEngine::Create_Sound_Group(std::string filename, std::string friendlyName, std::string group)
@@ -171,8 +171,8 @@ AUDIO_ID AudioEngine::Create_Sound_3d(std::string filename, std::string friendly
 	Sounds.push_back(newSound);
 	SoundNames.push_back(friendlyName);
 
-	this->Sounds_3d.push_back(this->Sounds.size() - 1);
-	return this->Sounds.size() - 1;
+	this->Sounds_3d.push_back((int)this->Sounds.size() - 1);
+	return (int)this->Sounds.size() - 1;
 }
 
 

@@ -3,7 +3,7 @@
 #include "iInputHandler.h"
 
 class Scene;
-class GLFWwindow;
+struct GLFWwindow;
 class cGameObject;
 
 class cPhysicsInputHandler : public iInputHandler

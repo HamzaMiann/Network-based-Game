@@ -81,7 +81,7 @@ void cAudioInputHandler::key_callback(GLFWwindow* window, int key, int scancode,
 {
 	if (groups.size() > 0)
 	{
-		int max = groups.size();
+		int max = (int)groups.size();
 
 		if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
 		{

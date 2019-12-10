@@ -26,11 +26,11 @@ sModelDrawInfo::sModelDrawInfo()
 
 	// You could store the max and min values of the 
 	//  vertices here (determined when you load them):
-	glm::vec3 maxValues;
-	glm::vec3 minValues;
+	//glm::vec3 maxValues;
+	//glm::vec3 minValues;
 
 //	scale = 5.0/maxExtent;		-> 5x5x5
-	float maxExtent;
+	//float maxExtent;
 
 	return;
 }

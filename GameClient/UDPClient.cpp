@@ -112,9 +112,9 @@ void UDPClient::Recv(void)
 {
 	struct sockaddr_in si_other;
 	int slen = sizeof(si_other);
-	char buffer[512];
+	char buffer[SCENE_BUFFER_SIZE];
 
-	int result = recvfrom(mServerSocket, buffer, 512, 0, (struct sockaddr*) & si_other, &slen);
+	int result = recvfrom(mServerSocket, buffer, SCENE_BUFFER_SIZE, 0, (struct sockaddr*) & si_other, &slen);
 	if (result == SOCKET_ERROR)
 	{
 		if (WSAGetLastError() == WSAEWOULDBLOCK)
@@ -126,7 +126,7 @@ void UDPClient::Recv(void)
 		// For a TCP connection you would close this socket, and remove it from 
 		// your list of connections. For UDP we will clear our buffer, and just
 		// ignore this.
-		memset(buffer, '\0', 512);
+		memset(buffer, '\0', SCENE_BUFFER_SIZE);
 		return;
 	}
 
@@ -139,9 +139,9 @@ void UDPClient::Recv(void)
 
 	//client_index = index;
 
-	float x, z;
-	for (int i = 0; i < numPlayers; i++)
+	for (unsigned int i = 0; i < numPlayers; i++)
 	{
+		float x, z;
 		memcpy(&x, &(buffer[i * 8 + 4]), sizeof(float));
 		memcpy(&z, &(buffer[i * 8 + 8]), sizeof(float));
 		mPlayers[i].x = x;
@@ -152,7 +152,7 @@ void UDPClient::Recv(void)
 	//printf("%d : %hu received %d bytes\n", mServerSocket, port, result);
 
 	printf("%d players: {", numPlayers);
-	for (int i = 0; i < numPlayers; i++)
+	for (unsigned int i = 0; i < numPlayers; i++)
 	{
 		printf(" {x: %.2f, y: %.2f}", mPlayers[i].x, mPlayers[i].z);
 	}

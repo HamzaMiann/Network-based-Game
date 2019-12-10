@@ -3,6 +3,9 @@
 #include <string>
 typedef unsigned __int64 SOCKET;
 
+#define SCENE_BUFFER_SIZE 512
+#define INPUT_BUFFER_SIZE 64
+
 class UDPClient
 {
 	UDPClient(void);

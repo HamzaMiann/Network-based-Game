@@ -146,7 +146,7 @@
 			<Scale>0.000731</Scale>
 			<SpecIntensity>10.000000</SpecIntensity>
 			<IMass>1.0</IMass>
-			<Collider>POINT</Collider>
+			<Collider>NONE</Collider>
 			<Texture ratio="1.000000">Fighter_Ship_wings_diffuse.bmp</Texture>
 			<Texture ratio="0.000000"/>
 			<Texture ratio="0.000000"/>
@@ -171,7 +171,7 @@
 			<Scale>1.000000</Scale>
 			<SpecIntensity>10.000000</SpecIntensity>
 			<IMass>1.000000</IMass>
-			<Collider>AABB</Collider>
+			<Collider>NONE</Collider>
 			<Texture ratio="1.000000">Ground_Dirt_007_basecolor.bmp</Texture>
       <Texture ratio="1.000000">Ground_Dirt_007_roughness.bmp</Texture>
       <Texture ratio="1.000000">Ground_Dirt_007_normal.bmp</Texture>
@@ -189,7 +189,7 @@
 			<Scale>1.000000</Scale>
 			<SpecIntensity>1.000000</SpecIntensity>
 			<IMass>1.000000</IMass>
-			<Collider>AABB</Collider>
+			<Collider>NONE</Collider>
 			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
 		</GameObject>
     
@@ -203,7 +203,7 @@
       <Scale>1.000000</Scale>
       <SpecIntensity>1.000000</SpecIntensity>
       <IMass>1.000000</IMass>
-      <Collider>AABB</Collider>
+      <Collider>NONE</Collider>
       <Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
     </GameObject>
     
@@ -221,159 +221,6 @@
       <Texture ratio="1.000000">Mercury_Diffuse.bmp</Texture>
       <Texture ratio="1.000000">Mercury_Bump.bmp</Texture>
     </GameObject>
-    
-		<GameObject mesh="halo_ring" tag="halo" shader="basic">
-			<Position x="0.000000" y="0" z="0.000000"/>
-			<Rotation x="0.0" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="1.000000"/>
-			<SpecColour x="0.000000" y="0.000000" z="0.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>1</Scale>
-			<SpecIntensity>1.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>MESH</Collider>
-			<Texture ratio="0.000000">Halo_Roughtness.bmp</Texture>
-			<Texture ratio="1.000000">13736_Halo_Albedo.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="149.000000" y="9.100874" z="-945.526489"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>15.377609</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="-167.000000" y="4.100874" z="-931.526489"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>15.377609</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="-4.000000" y="9.100874" z="998.473511"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>15.377609</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="497.998108" y="-201.204514" z="-154.295013"/>
-			<Rotation x="0.000000" y="0.000007" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>17.867300</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="-495.397430" y="-197.503998" z="-147.994629"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>10.000000</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="35.999989" y="238.295868" z="-223.195099"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>11.780359</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="-38.499893" y="235.695465" z="-227.095093"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>10.000000</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
-    
-		<GameObject mesh="sphere" tag="" shader="basic">
-			<Position x="1.100004" y="136.794693" z="351.006378"/>
-			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
-			<Colour x="1.000000" y="0.900000" z="0.300000" w="0.800000"/>
-			<SpecColour x="0.900000" y="0.900000" z="1.000000"/>
-			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
-			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
-			<Scale>10.000000</Scale>
-			<SpecIntensity>100.000000</SpecIntensity>
-			<IMass>1.000000</IMass>
-			<Collider>NONE</Collider>
-			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-			<Texture ratio="0.000000"/>
-		</GameObject>
     
 	</Layout>
 	<Audio API="FMOD"/>

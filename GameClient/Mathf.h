@@ -13,7 +13,7 @@ namespace Mathf
 		point.x -= center.x;
 		point.z -= center.z;
 
-		angle = angle * (PI / 180.f);
+		angle = angle * ((float)PI / 180.f);
 		float s = sin(angle);
 		float c = cos(angle);
 
@@ -25,7 +25,7 @@ namespace Mathf
 
 	static glm::vec3 get_rotated_vector(float angle, glm::vec3 const& center, glm::vec3 const& point)
 	{
-		angle = angle * (PI / 180.f);
+		angle = angle * ((float)PI / 180.f);
 		float s = sin(angle);
 		float c = cos(angle);
 

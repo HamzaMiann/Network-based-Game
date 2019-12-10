@@ -11,7 +11,7 @@
 
 class cGameObject;
 
-static class AudioEngine
+class AudioEngine
 {
 public:
 
