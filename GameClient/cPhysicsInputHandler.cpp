@@ -21,7 +21,7 @@ cPhysicsInputHandler::cPhysicsInputHandler(Scene& scene, GLFWwindow* window) : _
 	previousX = 0;
 	previousY = 0;
 	this->_window = window;
-	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	player = nullptr;
 	for (int i = 0; i < scene.vecGameObjects.size(); ++i)
 	{
@@ -41,9 +41,9 @@ cPhysicsInputHandler::~cPhysicsInputHandler()
 void cPhysicsInputHandler::HandleInput(GLFWwindow* window)
 {
 
-	glm::vec3 forward = (player->getQOrientation() * glm::vec4(0.f, 0.f, 1.f, 1.f)) * 5.f;
-	glm::vec3 right = glm::normalize((player->getQOrientation() * glm::quat(glm::vec3(0.f, glm::radians(90.f), 0.f))) * glm::vec4(0.f, 0.f, 1.f, 1.f)) * 5.f;
-	glm::vec3 up = glm::normalize(glm::cross(forward, right));
+	//glm::vec3 forward = (player->getQOrientation() * glm::vec4(0.f, 0.f, 1.f, 1.f)) * 5.f;
+	//glm::vec3 right = glm::normalize((player->getQOrientation() * glm::quat(glm::vec3(0.f, glm::radians(90.f), 0.f))) * glm::vec4(0.f, 0.f, 1.f, 1.f)) * 5.f;
+	//glm::vec3 up = glm::normalize(glm::cross(forward, right));
 
 
 	double x, y;
@@ -56,24 +56,33 @@ void cPhysicsInputHandler::HandleInput(GLFWwindow* window)
 		return;
 	}
 
-	_scene.cameraTarget = player->pos + forward;
-	_scene.cameraEye = player->pos - forward * 0.7f;
-	_scene.upVector = up;
 
-	_scene.cameraEye += up * 1.f;
+	//_scene.cameraTarget = player->pos + forward;
+	_scene.cameraTarget = glm::vec3(0.f);
+	//_scene.cameraEye = player->pos - forward * 0.7f;
+	_scene.cameraEye = glm::vec3(0.f, 100.f, 0.f);
 
-	float deltaX = previousX - x;
-	float deltaY = previousY - y;
+	//glm::vec3 forward = glm::normalize(_scene.cameraTarget - _scene.cameraEye);
+
+	//glm::vec3 up = glm::normalize(glm::cross(forward, right));
+
+
+	_scene.upVector = glm::vec3(0.f, 0.f, 1.f);// up;
+
+	//_scene.cameraEye += up * 1.f;
+
+	//float deltaX = previousX - x;
+	//float deltaY = previousY - y;
 
 	float speed = 1.f;
 
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
+	/*if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
 	{
 		speed *= 3.5f;
-	}
+	}*/
 
-	xchange = Mathf::lerp(xchange, deltaX, 0.2f);
-	ychange = Mathf::lerp(ychange, deltaY, 0.2f);
+	//xchange = Mathf::lerp(xchange, deltaX, 0.2f);
+	//ychange = Mathf::lerp(ychange, deltaY, 0.2f);
 
 	cLowpassFilter* filter = cLowpassFilter::Instance();
 
@@ -86,42 +95,51 @@ void cPhysicsInputHandler::HandleInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_W))
 	{
 		//player->AddForce(forward * 1.f * speed);// *filter->delta_time());
+		//player->pos.z += filter->delta_time();
 		input[0] = 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S))
 	{
 		//player->AddForce(forward * -1.f * speed);// * filter->delta_time());
+		//player->pos.z -= filter->delta_time();
 		input[1] = 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D))
 	{
 		//player->AddForce(right * -0.5f);// * filter->delta_time());
+		//player->pos.x -= filter->delta_time();
 		input[2] = 1;
 
 	}
 	if (glfwGetKey(window, GLFW_KEY_A))
 	{
 		//player->AddForce(right * 0.5f);// * filter->delta_time());
+		//player->pos.x += filter->delta_time();
 		input[3] = 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q))
 	{
-		zchange = Mathf::lerp(zchange, -3.f, 0.1f);
+		xchange = 20.f;
+		//xchange = Mathf::lerp(xchange, 3.f, filter->delta_time() * 5.f);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_E))
 	{
-		zchange = Mathf::lerp(zchange, 3.f, 0.1f);
+		xchange = -20.f;
+		//xchange = Mathf::lerp(xchange, -3.f, filter->delta_time() * 5.f);
 	}
 	else
 	{
-		zchange = Mathf::lerp(zchange, 0.f, 0.1f);
+		xchange = 0.f;
+		//xchange = Mathf::lerp(xchange, 0.f, filter->delta_time() * 5.f);
 	}
+
+	player->pos.y = 50.f;
 
 	UDPClient::Instance()->Send(input, 4);
 
-	player->updateOrientation(glm::vec3(-ychange * 0.05f, 0.f, 0.f));
-	player->updateOrientation(glm::vec3(0.f, xchange * 0.05f, 0.f));
-	player->updateOrientation(glm::vec3(0.f, 0.f, zchange));
+	//player->updateOrientation(glm::vec3(-ychange * 0.05f, 0.f, 0.f));
+	player->updateOrientation(glm::vec3(0.f, xchange * 0.1f, 0.f));
+	//player->updateOrientation(glm::vec3(0.f, 0.f, zchange));
 
 	previousX = x;
 	previousY = y;

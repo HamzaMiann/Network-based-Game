@@ -27,7 +27,7 @@ void _PrintWSAError(const char* file, int line);
 struct sockaddr_in si_other;
 struct Player
 {
-	float x, y, z;
+	float x, z;
 };
 
 std::vector<Player> mPlayers;
@@ -44,10 +44,9 @@ void _PrintWSAError(const char* file, int line)
 	LocalFree(s);
 }
 
-void UDPClient::SetPosition(int id, float& x, float& y, float& z, float delta_time)
+void UDPClient::SetPosition(int id, float& x, float& z, float delta_time)
 {
 	x = Mathf::lerp(x, mPlayers[id].x, delta_time * 2.f);
-	y = Mathf::lerp(y, mPlayers[id].y, delta_time * 2.f);
 	z = Mathf::lerp(z, mPlayers[id].z, delta_time * 2.f);
 }
 
@@ -134,15 +133,19 @@ void UDPClient::Recv(void)
 	// NumPlayers
 	// Each player: { x, y }
 	unsigned int numPlayers;
+	//int index;
 	memcpy(&numPlayers, &(buffer[0]), sizeof(unsigned int));
+	//memcpy(&index, &(buffer[4]), sizeof(int));
 
-	float x, y;
+	//client_index = index;
+
+	float x, z;
 	for (int i = 0; i < numPlayers; i++)
 	{
 		memcpy(&x, &(buffer[i * 8 + 4]), sizeof(float));
-		memcpy(&y, &(buffer[i * 8 + 8]), sizeof(float));
+		memcpy(&z, &(buffer[i * 8 + 8]), sizeof(float));
 		mPlayers[i].x = x;
-		mPlayers[i].y = y;
+		mPlayers[i].z = z;
 	}
 
 	//unsigned short port = si_other.sin_port;
@@ -151,7 +154,7 @@ void UDPClient::Recv(void)
 	printf("%d players: {", numPlayers);
 	for (int i = 0; i < numPlayers; i++)
 	{
-		printf(" {x: %.2f, y: %.2f}", mPlayers[i].x, mPlayers[i].y);
+		printf(" {x: %.2f, y: %.2f}", mPlayers[i].x, mPlayers[i].z);
 	}
 	printf(" }\n");
 }

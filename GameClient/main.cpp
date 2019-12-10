@@ -57,7 +57,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 
-	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	/*if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	{
 		delete pInputHandler;
 		input_id++;
@@ -73,7 +73,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		{
 			pInputHandler = new cPhysicsInputHandler(*scene, window);
 		}
-	}
+	}*/
 
 	if (key == GLFW_KEY_P && action == GLFW_PRESS)
 	{
@@ -207,22 +207,6 @@ int main(void)
 	glm::vec3 min = scene->pModelLoader->min;
 	glm::vec3 max = scene->pModelLoader->max;
 
-	cGameObject* bounds = new cGameObject;
-	bounds->pos = (max + min) / 2.f;
-	bounds->scale = glm::distance(max, min) / 2.f;
-	bounds->colour = glm::vec4(1.f, 0.f, 0.f, 1.f);
-	bounds->meshName = "cube";
-	bounds->tag = "AABB";
-	bounds->shaderName = "basic";
-	bounds->isWireframe = true;
-	bounds->inverseMass = 0.f;
-	bounds->uniformColour = true;
-	//scene->vecGameObjects.push_back(bounds);
-	
-	
-	//scene->cameraEye = glm::vec3(-39.f, 2.f, -63.f);
-
-
 	cGameObject* ship = scene->vecGameObjects[0];
 	sLight* light1 = scene->pLightManager->Lights[0];
 	sLight* light2 = scene->pLightManager->Lights[1];
@@ -244,9 +228,35 @@ int main(void)
 	sphere->texture[0] = ship->texture[0];
 	sphere->textureRatio[0] = 1.f;
 
-	UDPClient* mClient = UDPClient::Instance();
 
-	mClient->CreateSocket("127.0.0.1", 5150);
+	// NETWORK STUFF
+	//---------------------------------------------
+	//---------------------------------------------
+	UDPClient* network_client = UDPClient::Instance();
+
+	network_client->CreateSocket("127.0.0.1", 5150);
+	scene->vecGameObjects.erase(scene->vecGameObjects.begin());
+
+	std::vector<cGameObject*> players;
+	players.push_back(ship);
+	for (int i = 0; i < 3; ++i)
+	{
+		cGameObject* newPlayer = new cGameObject;
+		newPlayer->pos = glm::vec3(0.f, 50.f, 0.f);
+		newPlayer->texture[0] = ship->texture[0];
+		newPlayer->texture[1] = ship->texture[1];
+		newPlayer->textureRatio[0] = ship->textureRatio[0];
+		newPlayer->textureRatio[1] = ship->textureRatio[1];
+		newPlayer->gravityScale = ship->gravityScale;
+		newPlayer->meshName = ship->meshName;
+		newPlayer->shaderName = ship->shaderName;
+		newPlayer->scale = ship->scale;
+		newPlayer->specColour = ship->specColour;
+		newPlayer->specIntensity = ship->specIntensity;
+		players.push_back(newPlayer);
+	}
+	//---------------------------------------------
+	//---------------------------------------------
 
 	cLowpassFilter* filter = cLowpassFilter::Instance();
 	float current_time = (float)glfwGetTime();
@@ -288,8 +298,7 @@ int main(void)
 		glEnable(GL_BLEND);      // Enable blend or "alpha" transparency
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		mClient->Update();
-		mClient->SetPosition(0, ship->pos.x, ship->pos.y, ship->pos.z, delta_time);
+		network_client->Update();
 
 		// Update the objects' physics
 		phys->CheckCollisions(scene, delta_time);
@@ -371,19 +380,7 @@ int main(void)
 							false);
 			}
 
-			if (objPtr->tag == "player")
-			{
-				glm::mat4 model = objPtr->ModelMatrix();
-				light1->position = model * glm::vec4(ship->CollidePoints[0], 1.f);
-				light2->position = model * glm::vec4(ship->CollidePoints[1], 1.f);
-				pEffect.pos = ((light2->position - light1->position) / 2.f) + light1->position;
-				/*for (int n = 0; n < objPtr->CollidePoints.size(); ++n)
-				{
-					renderer->addLine(objPtr->pos,
-									  glm::vec3(model * glm::vec4(objPtr->CollidePoints[n], 1.f)),
-									  glm::vec3(1.f, 0.f, 0.f), .1f);
-				}*/
-			}
+			
 
 			DrawObject(objPtr, ratio, v, p);
 
@@ -392,7 +389,36 @@ int main(void)
 		// **************************************************
 
 
+		for (int index = 0; index < players.size(); ++index)
+		{
+			cGameObject* objPtr = players[index];
+
+			network_client->SetPosition(index, objPtr->pos.x, objPtr->pos.z, delta_time);
+			objPtr->pos.y = 50.f;
+
+
+			GLint shaderProgID = scene->Shaders[objPtr->shaderName];
+
+			// Only switch shaders if needed
+			if (lastShader != shaderProgID)
+			{
+				glUseProgram(shaderProgID);
+				lastShader = shaderProgID;
+			}
+
+			if (objPtr->tag == "player")
+			{
+				glm::mat4 model = objPtr->ModelMatrix();
+				light1->position = model * glm::vec4(ship->CollidePoints[0], 1.f);
+				light2->position = model * glm::vec4(ship->CollidePoints[1], 1.f);
+				pEffect.pos = ((light2->position - light1->position) / 2.f) + light1->position;
+			}
+
+			DrawObject(objPtr, ratio, v, p);
+		}
+
 		glUseProgram(scene->Shaders[sphere->shaderName]);
+
 		// set time
 		float time = glfwGetTime();
 		glUniform1f(glGetUniformLocation(scene->Shaders[sphere->shaderName], "iTime"), time);

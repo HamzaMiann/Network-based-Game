@@ -12,7 +12,7 @@ struct Player
 	unsigned short port; // their id;
 	struct sockaddr_in si_other;
 	float x;
-	float y;
+	float z;
 	bool up, down, right, left;
 };
 
@@ -129,10 +129,10 @@ void UDPServer::UpdatePlayers(void)
 {
 	for (int i = 0; i < numPlayersConnected; i++)
 	{
-		if (mPlayers[i].up) mPlayers[i].y += 10.0f * elapsed_secs;
-		if (mPlayers[i].down) mPlayers[i].y -= 10.0f * elapsed_secs;
-		if (mPlayers[i].right) mPlayers[i].x += 10.0f * elapsed_secs;
-		if (mPlayers[i].left) mPlayers[i].x -= 10.0f * elapsed_secs;
+		if (mPlayers[i].up) mPlayers[i].z += 5.0f * elapsed_secs;
+		if (mPlayers[i].down) mPlayers[i].z -= 5.0f * elapsed_secs;
+		if (mPlayers[i].right) mPlayers[i].x -= 5.0f * elapsed_secs;
+		if (mPlayers[i].left) mPlayers[i].x += 5.0f * elapsed_secs;
 	}
 }
 
@@ -145,16 +145,23 @@ void UDPServer::BroadcastUpdate(void)
 
 	memcpy(&(buffer[0]), &numPlayersConnected, sizeof(unsigned int));
 
+	int index_offset = 4;
+
 	for (int i = 0; i < numPlayersConnected; i++)
 	{
 		float x = mPlayers[i].x;
-		float y = mPlayers[i].y;
+		float z = mPlayers[i].z;
 		memcpy(&(buffer[i * 8 + 4]), &x, sizeof(float));
-		memcpy(&(buffer[i * 8 + 8]), &y, sizeof(float));
+		memcpy(&(buffer[i * 8 + 8]), &z, sizeof(float));
+
 	}
 
-	int result = sendto(mListenSocket, buffer, 12, 0,
-		(struct sockaddr*) & (mPlayers[0].si_other), sizeof(mPlayers[0].si_other));
+	for (int i = 0; i < numPlayersConnected; i++)
+	{
+		//memcpy(&(buffer[index_offset]), &i, sizeof(int));
+		int result = sendto(mListenSocket, buffer, 12, 0,
+			(struct sockaddr*) & (mPlayers[i].si_other), sizeof(mPlayers[i].si_other));
+	}
 }
 
 
@@ -169,8 +176,8 @@ Player* GetPlayerByPort(unsigned short port, struct sockaddr_in si_other)
 
 	// Otherwise create a new player, and return that one!
 	mPlayers[numPlayersConnected].port = port;
-	mPlayers[numPlayersConnected].x = 0.0f;
-	mPlayers[numPlayersConnected].y = 0.0f;
+	mPlayers[numPlayersConnected].x = randInRange(-20, 20);
+	mPlayers[numPlayersConnected].z = randInRange(-20, 20);
 	mPlayers[numPlayersConnected].si_other = si_other;
 	return &(mPlayers[numPlayersConnected++]);
 }

@@ -17,6 +17,15 @@ using std::vector;
 void _PrintWSAError(const char* file, int line);
 #define PrintWSAError() _PrintWSAError(__FILE__, __LINE__)
 
+template <class T>
+static T randInRange(T min, T max)
+{
+	double value =
+		min + static_cast <double> (rand())
+		/ (static_cast <double> (RAND_MAX / (static_cast<double>(max - min))));
+	return static_cast<T>(value);
+};
+
 class UDPServer
 {
 public:
