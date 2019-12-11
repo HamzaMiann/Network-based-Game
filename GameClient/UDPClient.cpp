@@ -15,22 +15,14 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#include <vector>
 #include <string>
 #include "Mathf.h"
 
 using std::string;
 
-void _PrintWSAError(const char* file, int line);
 #define PrintWSAError() _PrintWSAError(__FILE__, __LINE__)
 
 struct sockaddr_in si_other;
-struct Player
-{
-	float x, z;
-};
-
-std::vector<Player> mPlayers;
 
 void _PrintWSAError(const char* file, int line)
 {
@@ -44,16 +36,17 @@ void _PrintWSAError(const char* file, int line)
 	LocalFree(s);
 }
 
-void UDPClient::SetPosition(int id, float& x, float& z, float delta_time)
+void UDPClient::SetPosition(int id, float& x, float& z, float& rotation, float delta_time)
 {
-	x = Mathf::lerp(x, mPlayers[id].x, delta_time * 2.f);
-	z = Mathf::lerp(z, mPlayers[id].z, delta_time * 2.f);
+	x = Mathf::lerp(x, players[id].x, delta_time * 2.f);
+	z = Mathf::lerp(z, players[id].z, delta_time * 2.f);
+	rotation = players[id].y;
 }
 
 UDPClient::UDPClient(void)
 	: mServerSocket(INVALID_SOCKET)
 {
-	mPlayers.resize(8);
+	players.resize(8);
 
 	WSAData		WSAData;
 	int			iResult;
@@ -141,11 +134,13 @@ void UDPClient::Recv(void)
 
 	for (unsigned int i = 0; i < numPlayers; i++)
 	{
-		float x, z;
-		memcpy(&x, &(buffer[i * 8 + 4]), sizeof(float));
-		memcpy(&z, &(buffer[i * 8 + 8]), sizeof(float));
-		mPlayers[i].x = x;
-		mPlayers[i].z = z;
+		float x, y, z;
+		memcpy(&x, &(buffer[i * 12 + 4]), sizeof(float));
+		memcpy(&y, &(buffer[i * 12 + 8]), sizeof(float));
+		memcpy(&z, &(buffer[i * 12 + 12]), sizeof(float));
+		players[i].x = x;
+		players[i].y = y;
+		players[i].z = z;
 	}
 
 	//unsigned short port = si_other.sin_port;
@@ -154,7 +149,7 @@ void UDPClient::Recv(void)
 	printf("%d players: {", numPlayers);
 	for (unsigned int i = 0; i < numPlayers; i++)
 	{
-		printf(" {x: %.2f, y: %.2f}", mPlayers[i].x, mPlayers[i].z);
+		printf(" {x: %.2f, y: %.2f}", players[i].x, players[i].z);
 	}
 	printf(" }\n");
 }

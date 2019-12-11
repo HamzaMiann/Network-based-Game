@@ -109,37 +109,41 @@ void cPhysicsInputHandler::HandleInput(GLFWwindow* window)
 		//player->AddForce(right * -0.5f);// * filter->delta_time());
 		//player->pos.x -= filter->delta_time();
 		input[2] = 1;
-
+		//xchange = Mathf::lerp(xchange, -90.f, filter->delta_time() * 90.f);
 	}
-	if (glfwGetKey(window, GLFW_KEY_A))
+	else if (glfwGetKey(window, GLFW_KEY_A))
 	{
 		//player->AddForce(right * 0.5f);// * filter->delta_time());
 		//player->pos.x += filter->delta_time();
 		input[3] = 1;
-	}
-	if (glfwGetKey(window, GLFW_KEY_Q))
-	{
-		xchange = 20.f;
-		//xchange = Mathf::lerp(xchange, 3.f, filter->delta_time() * 5.f);
-	}
-	else if (glfwGetKey(window, GLFW_KEY_E))
-	{
-		xchange = -20.f;
-		//xchange = Mathf::lerp(xchange, -3.f, filter->delta_time() * 5.f);
+		//xchange = Mathf::lerp(xchange, 90.f, filter->delta_time() * 90.f);
 	}
 	else
 	{
-		xchange = 0.f;
-		//xchange = Mathf::lerp(xchange, 0.f, filter->delta_time() * 5.f);
+		//xchange = 0.f;
+		//xchange = Mathf::lerp(xchange, 0.f, filter->delta_time() * 90.f);
 	}
+	//if (glfwGetKey(window, GLFW_KEY_Q))
+	//{
+	//	xchange = 20.f;
+	//	//xchange = Mathf::lerp(xchange, 3.f, filter->delta_time() * 5.f);
+	//}
+	//else if (glfwGetKey(window, GLFW_KEY_E))
+	//{
+	//	xchange = -20.f;
+	//	//xchange = Mathf::lerp(xchange, -3.f, filter->delta_time() * 5.f);
+	//}
+	//else
+	//{
+	//	xchange = 0.f;
+	//	//xchange = Mathf::lerp(xchange, 0.f, filter->delta_time() * 5.f);
+	//}
 
 	player->pos.y = 50.f;
 
 	UDPClient::Instance()->Send(input, 4);
 
-	//player->updateOrientation(glm::vec3(-ychange * 0.05f, 0.f, 0.f));
-	player->updateOrientation(glm::vec3(0.f, xchange * 0.1f, 0.f));
-	//player->updateOrientation(glm::vec3(0.f, 0.f, zchange));
+	player->updateOrientation(glm::vec3(0.f, xchange * 0.5f, 0.f));
 
 	previousX = x;
 	previousY = y;

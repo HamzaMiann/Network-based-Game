@@ -392,8 +392,12 @@ int main(void)
 		for (int index = 0; index < players.size(); ++index)
 		{
 			cGameObject* objPtr = players[index];
-
-			network_client->SetPosition(index, objPtr->pos.x, objPtr->pos.z, delta_time);
+			float y;
+			network_client->SetPosition(index, objPtr->pos.x, objPtr->pos.z, y, delta_time);
+			y = glm::radians(y);
+			objPtr->setOrientation(
+				glm::slerp(objPtr->getQOrientation(), glm::quat(glm::vec3(0.f, y, 0.f)), delta_time * 17.f)
+			);
 			objPtr->pos.y = 50.f;
 
 

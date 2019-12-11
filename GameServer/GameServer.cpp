@@ -66,7 +66,7 @@ void _PrintWSAError(const char* file, int line)
 	LocalFree(s);
 }
 
-UDPServer::UDPServer(void)
+GameServer::GameServer(void)
 	: mIsRunning(false)
 	, mListenSocket(INVALID_SOCKET)
 	, mAcceptSocket(INVALID_SOCKET)
@@ -119,13 +119,13 @@ UDPServer::UDPServer(void)
 	prev = std::clock();
 } // end UDPServer
 
-UDPServer::~UDPServer(void)
+GameServer::~GameServer(void)
 {
 	closesocket(mListenSocket);
 	WSACleanup();	// <-- Not necessary if quitting application, Windows will handle this.
 }
 
-void UDPServer::SetNonBlocking(SOCKET socket)
+void GameServer::SetNonBlocking(SOCKET socket)
 {
 	ULONG NonBlock = 1;
 	int result = ioctlsocket(socket, FIONBIO, &NonBlock);
@@ -136,11 +136,10 @@ void UDPServer::SetNonBlocking(SOCKET socket)
 	}
 }
 
-void UDPServer::Update(void)
+void GameServer::Update(void)
 {
 	if (!mIsRunning) return;
 
-	// TODO: ReadData, SendData
 	ReadData();
 
 	curr = std::clock();
@@ -153,21 +152,30 @@ void UDPServer::Update(void)
 	BroadcastUpdate();
 }
 
-void UDPServer::UpdatePlayers(void)
+void GameServer::UpdatePlayers(void)
 {
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
 		ServerPlayer* player = &mPlayers[i];
-		if (player->up) player->transform.pos.z += 5.0f * (float)elapsed_secs;
-		if (player->down) player->transform.pos.z -= 5.0f * (float)elapsed_secs;
-		if (player->right) player->transform.pos.x -= 5.0f * (float)elapsed_secs;
-		if (player->left) player->transform.pos.x += 5.0f * (float)elapsed_secs;
-		//printf(" %d : { %f, %f } || ", player->id, player->transform.pos.x, player->transform.pos.z);
+		float speed = 0.f;
+		if (player->up) speed = 5.f;
+		if (player->down) speed += -5.f;
+
+		if (player->right) player->transform.pos.y -= 90.f * (float)elapsed_secs;
+		if (player->left) player->transform.pos.y += 90.f * (float)elapsed_secs;
+
+		player->transform.pos += player->transform.Forward() * speed * (float) elapsed_secs;
+
+		//if (player->up) player->transform.pos.z += 5.0f * (float)elapsed_secs;
+		//if (player->down) player->transform.pos.z -= 5.0f * (float)elapsed_secs;
+		//if (player->right) player->transform.pos.x -= 5.0f * (float)elapsed_secs;
+		//if (player->left) player->transform.pos.x += 5.0f * (float)elapsed_secs;
+		printf(" %d : { %f, %f } { %f } || ", player->id, player->transform.pos.x, player->transform.pos.z, player->transform.pos.y);
 	}
-	//printf("\n");
+	printf("\n");
 }
 
-void UDPServer::BroadcastUpdate(void)
+void GameServer::BroadcastUpdate(void)
 {
 	// create our data to send, then send the same data to all players
 	const int DEFAULT_BUFLEN = SCENE_BUFFER_SIZE;
@@ -181,8 +189,9 @@ void UDPServer::BroadcastUpdate(void)
 	{
 		//float x = mPlayers[i].transform.pos.x;
 		//float z = mPlayers[i].transform.pos.z;
-		memcpy(&(buffer[i * 8 + 4]), &mPlayers[i].transform.pos.x, sizeof(float));
-		memcpy(&(buffer[i * 8 + 8]), &mPlayers[i].transform.pos.z, sizeof(float));
+		memcpy(&(buffer[i * 12 + 4]), &mPlayers[i].transform.pos.x, sizeof(float));
+		memcpy(&(buffer[i * 12 + 8]), &mPlayers[i].transform.pos.y, sizeof(float));
+		memcpy(&(buffer[i * 12 + 12]), &mPlayers[i].transform.pos.z, sizeof(float));
 
 	}
 
@@ -217,7 +226,7 @@ ServerPlayer* GetPlayerByPort(unsigned short port, struct sockaddr_in si_other)
 	return &(mPlayers[numPlayersConnected++]);
 }
 
-void UDPServer::ReadData(void)
+void GameServer::ReadData(void)
 {
 	struct sockaddr_in si_other;
 	int slen = sizeof(si_other);

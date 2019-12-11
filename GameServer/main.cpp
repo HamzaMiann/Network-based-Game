@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-	UDPServer server;
+	GameServer server;
 	int ch;
 
 	while (1)

@@ -17,8 +17,8 @@ using std::vector;
 void _PrintWSAError(const char* file, int line);
 #define PrintWSAError() _PrintWSAError(__FILE__, __LINE__)
 
-#define SCENE_BUFFER_SIZE 512
-#define INPUT_BUFFER_SIZE 64
+#define SCENE_BUFFER_SIZE 1024
+#define INPUT_BUFFER_SIZE 16
 
 template <class T>
 static T randInRange(T min, T max)
@@ -29,11 +29,11 @@ static T randInRange(T min, T max)
 	return static_cast<T>(value);
 };
 
-class UDPServer
+class GameServer
 {
 public:
-	UDPServer(void);
-	~UDPServer(void);
+	GameServer(void);
+	~GameServer(void);
 
 	void Update(void);
 
