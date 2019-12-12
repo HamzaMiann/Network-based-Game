@@ -449,8 +449,9 @@ int main(void)
 			Projectile* projectile = &network_client->projectiles[index];
 			if (projectile->state == 1)
 			{
-				projectile->previousPos = Mathf::lerp(projectile->previousPos, projectile->pos, delta_time * 2.f);
-				sphere->pos = projectile->previousPos;
+				//projectile->previousPos = Mathf::lerp(projectile->previousPos, projectile->pos, delta_time * 2.f);
+				projectile->pos += projectile->vel * delta_time;
+				sphere->pos = projectile->pos;
 				DrawObject(sphere, ratio, v, p);
 			}
 		}

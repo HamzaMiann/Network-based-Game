@@ -211,6 +211,8 @@ void GameServer::BroadcastUpdate(void)
 		SET(mProjectiles[i].state, char);
 		SET(mProjectiles[i].pos.x, float);
 		SET(mProjectiles[i].pos.y, float);
+		SET(mProjectiles[i].vel.x, float);
+		SET(mProjectiles[i].vel.y, float);
 		//memcpy(&(buffer[index]), &mProjectiles[i].state, sizeof(char)); index += sizeof(char);
 		//memcpy(&(buffer[index]), &mProjectiles[i].pos.x, sizeof(float)); index += sizeof(float);
 		//memcpy(&(buffer[index]), &mProjectiles[i].pos.y, sizeof(float)); index += sizeof(float);
@@ -292,7 +294,7 @@ void GameServer::ReadData(void)
 		mProjectiles.resize(mProjectiles.size() + 1);
 		glm::vec3 pos = player->transform.Forward();
 		mProjectiles[mProjectiles.size() - 1].vel = glm::vec2(pos.x, pos.z) * 5.f;
-		pos *= 1.3f;
+		pos *= 0.7f;
 		pos.x += player->transform.pos.x;
 		pos.z += player->transform.pos.z;
 		mProjectiles[mProjectiles.size() - 1].pos = glm::vec2(pos.x, pos.z);

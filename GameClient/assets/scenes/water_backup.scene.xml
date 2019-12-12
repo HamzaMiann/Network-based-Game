@@ -148,7 +148,79 @@
 			<IMass>1.0</IMass>
 			<Collider>NONE</Collider>
 			<Texture ratio="1.000000">Fighter_Ship_wings_diffuse.bmp</Texture>
+			<Texture ratio="0.000000"/>
+			<Texture ratio="0.000000"/>
+			<Texture ratio="0.000000"/>
+			<CollidePoint x="149.000000" y="9.100874" z="-945.526489"/>
+			<CollidePoint x="-167.000000" y="4.100874" z="-931.526489"/>
+			<CollidePoint x="-4.000000" y="9.100874" z="998.473511"/>
+			<CollidePoint x="497.998108" y="-201.204514" z="-154.295013"/>
+			<CollidePoint x="-495.397430" y="-197.503998" z="-147.994629"/>
+			<CollidePoint x="35.999989" y="238.295868" z="-223.195099"/>
+			<CollidePoint x="-38.499893" y="235.695465" z="-227.095093"/>
+			<CollidePoint x="1.100004" y="136.794693" z="351.006378"/>
 		</GameObject>
+    
+		<GameObject mesh="terrain" tag="terrain" shader="specular">
+			<Position x="0.000000" y="0.000000" z="0.000000"/>
+			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="0.900000" z="0.300000" w="1.000000"/>
+			<SpecColour x="0.000000" y="0.000000" z="0.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>1.000000</Scale>
+			<SpecIntensity>10.000000</SpecIntensity>
+			<IMass>1.000000</IMass>
+			<Collider>NONE</Collider>
+			<Texture ratio="1.000000">Ground_Dirt_007_basecolor.bmp</Texture>
+      <Texture ratio="1.000000">Ground_Dirt_007_roughness.bmp</Texture>
+      <Texture ratio="1.000000">Ground_Dirt_007_normal.bmp</Texture>
+      <Texture ratio="1.000000">Ground_Dirt_007_ambientOcclusion.bmp</Texture>
+		</GameObject>
+    
+    
+		<GameObject mesh="buildings" tag="buildings" shader="basic">
+			<Position x="0.000000" y="0.000000" z="0.000000"/>
+			<Rotation x="0.000000" y="-0.000000" z="0.000000"/>
+			<Colour x="1.000000" y="0.900000" z="0.300000" w="1.000000"/>
+			<SpecColour x="0.000000" y="0.000000" z="0.000000"/>
+			<Velocity x="0.000000" y="0.000000" z="0.000000"/>
+			<Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+			<Scale>1.000000</Scale>
+			<SpecIntensity>1.000000</SpecIntensity>
+			<IMass>1.000000</IMass>
+			<Collider>NONE</Collider>
+			<Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
+		</GameObject>
+    
+    <GameObject mesh="buildings2" tag="buildings2" shader="basic">
+      <Position x="0.000000" y="0.000000" z="0.000000"/>
+      <Rotation x="0.000000" y="-0.000000" z="0.000000"/>
+      <Colour x="1.000000" y="0.900000" z="0.300000" w="1.000000"/>
+      <SpecColour x="0.000000" y="0.000000" z="0.000000"/>
+      <Velocity x="0.000000" y="0.000000" z="0.000000"/>
+      <Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+      <Scale>1.000000</Scale>
+      <SpecIntensity>1.000000</SpecIntensity>
+      <IMass>1.000000</IMass>
+      <Collider>NONE</Collider>
+      <Texture ratio="1.000000">fx3_Panels_Color.bmp</Texture>
+    </GameObject>
+    
+    <GameObject mesh="mercury" tag="planet" shader="bump">
+      <Position x="0.000000" y="900.000000" z="2200.000000"/>
+      <Rotation x="0.000000" y="-0.000000" z="0.000000"/>
+      <Colour x="1.000000" y="0.900000" z="0.300000" w="1.000000"/>
+      <SpecColour x="0.000000" y="0.000000" z="0.000000"/>
+      <Velocity x="0.000000" y="0.000000" z="0.000000"/>
+      <Acceleration x="0.000000" y="0.000000" z="0.000000"/>
+      <Scale>3500.000000</Scale>
+      <SpecIntensity>1.000000</SpecIntensity>
+      <IMass>1.000000</IMass>
+      <Collider>NONE</Collider>
+      <Texture ratio="1.000000">Mercury_Diffuse.bmp</Texture>
+      <Texture ratio="1.000000">Mercury_Bump.bmp</Texture>
+    </GameObject>
     
 	</Layout>
 	<Audio API="FMOD"/>

@@ -22,7 +22,9 @@ struct Projectile
 	char state = 1;
 	// position
 	glm::vec3 pos;
-	// previous position
+	// velocity
+	glm::vec3 vel;
+	// client-side location
 	glm::vec3 previousPos = glm::vec3(0.f);
 };
 

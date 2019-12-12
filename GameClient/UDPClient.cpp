@@ -171,16 +171,19 @@ void UDPClient::Recv(void)
 	for (int i = 0; i < numProjectiles; ++i)
 	{
 		char is_active;
-		float x, z;
+		float x, z, vx, vz;
 		SET(is_active, buffer[index], char);
 		SET(x, buffer[index], float);
 		SET(z, buffer[index], float);
+		SET(vx, buffer[index], float);
+		SET(vz, buffer[index], float);
 		projectiles[i].pos = glm::vec3(x, 50.f, z);
 		projectiles[i].state = is_active;
-		if (projectiles[i].previousPos.x == 0.f)
+		/*if (projectiles[i].previousPos.x == 0.f)
 		{
 			projectiles[i].previousPos = projectiles[i].pos;
-		}
+		}*/
+		projectiles[i].vel = glm::vec3(vx, 0.f, vz);
 	}
 
 	//unsigned short port = si_other.sin_port;
