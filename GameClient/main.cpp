@@ -238,7 +238,9 @@ int main(void)
 	scene->vecGameObjects.erase(scene->vecGameObjects.begin());
 
 	std::vector<cGameObject*> players;
+	network_client->playerObjects = &players;
 	players.push_back(ship);
+
 	for (int i = 0; i < 3; ++i)
 	{
 		cGameObject* newPlayer = new cGameObject;
@@ -389,14 +391,16 @@ int main(void)
 		// **************************************************
 
 
-		for (int index = 0; index < players.size(); ++index)
+		for (int index = 0; index < network_client->numPlayers; ++index)
 		{
+			if (network_client->players[index].is_alive == 0) continue;
+
 			cGameObject* objPtr = players[index];
 			float y;
 			network_client->SetPosition(index, objPtr->pos.x, objPtr->pos.z, y, delta_time);
 			y = glm::radians(y);
 			objPtr->setOrientation(
-				glm::slerp(objPtr->getQOrientation(), glm::quat(glm::vec3(0.f, y, 0.f)), delta_time * 17.f)
+				glm::slerp(objPtr->getQOrientation(), glm::quat(glm::vec3(0.f, y, 0.f)), delta_time * 10.f)
 			);
 			objPtr->pos.y = 50.f;
 
@@ -410,13 +414,13 @@ int main(void)
 				lastShader = shaderProgID;
 			}
 
-			if (objPtr->tag == "player")
+			/*if (objPtr->tag == "player")
 			{
 				glm::mat4 model = objPtr->ModelMatrix();
 				light1->position = model * glm::vec4(ship->CollidePoints[0], 1.f);
 				light2->position = model * glm::vec4(ship->CollidePoints[1], 1.f);
 				pEffect.pos = ((light2->position - light1->position) / 2.f) + light1->position;
-			}
+			}*/
 
 			DrawObject(objPtr, ratio, v, p);
 		}
@@ -437,6 +441,18 @@ int main(void)
 			sphere->pos = particle->pos;
 			sphere->scale = particle->scale;
 			DrawObject(sphere, ratio, v, p);
+		}
+
+		sphere->scale = 0.3f;
+		for (unsigned int index = 0; index < network_client->projectiles.size(); ++index)
+		{
+			Projectile* projectile = &network_client->projectiles[index];
+			if (projectile->state == 1)
+			{
+				projectile->previousPos = Mathf::lerp(projectile->previousPos, projectile->pos, delta_time * 2.f);
+				sphere->pos = projectile->previousPos;
+				DrawObject(sphere, ratio, v, p);
+			}
 		}
 
 

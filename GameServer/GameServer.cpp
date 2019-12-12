@@ -3,56 +3,12 @@
 #include <winsock.h>
 #include <WS2tcpip.h>
 
-#include <ctime>
-#include <glm/vec3.hpp>
-#include <glm/gtx/quaternion.hpp>
-
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
-int global_id = 0;
-
-const glm::vec3 forward(0.f, 0.f, 1.f);
-
-struct Transform
-{
-	// x is x position
-	// y is y ROTATION
-	// z is z position
-	glm::vec3 pos = glm::vec3(
-		randInRange(-20.f, 20.f),
-		0.f,
-		randInRange(-10.f, 10.f)
-	);
-
-	glm::quat Rotation()
-	{
-		return glm::quat(glm::vec3(0.f, glm::radians(pos.y), 0.f));
-	}
-
-	glm::vec3 Forward()
-	{
-		return Rotation() * forward;
-	}
-
-};
-
-struct ServerPlayer
-{
-	unsigned int id = global_id++;
-	unsigned short port; // their id;
-	struct sockaddr_in si_other;
-	Transform transform;
-	bool up, down, right, left;
-};
-
-unsigned int numPlayersConnected = 0;
-std::vector<ServerPlayer> mPlayers;
-
-const float UPDATES_PER_SEC = 5;		// 5Hz / 200ms per update / 5 updates per second
-std::clock_t curr;
-std::clock_t prev;
-double elapsed_secs;
-
+#define SET(to, from, type) memcpy(&(to), &from, sizeof(type)); index += sizeof(type)
+#define SET(from, type) memcpy(&(buffer[index]), &from, sizeof(type)); index += sizeof(type)
+#define INIT_INDEX int index = 0
+#define INIT_INDEX(start) int index = start
 
 void _PrintWSAError(const char* file, int line)
 {
@@ -149,6 +105,7 @@ void GameServer::Update(void)
 	prev = curr;
 
 	UpdatePlayers();
+
 	BroadcastUpdate();
 }
 
@@ -156,7 +113,11 @@ void GameServer::UpdatePlayers(void)
 {
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
+
 		ServerPlayer* player = &mPlayers[i];
+
+		if (player->is_alive != 1) continue;
+
 		float speed = 0.f;
 		if (player->up) speed = 5.f;
 		if (player->down) speed += -5.f;
@@ -166,14 +127,48 @@ void GameServer::UpdatePlayers(void)
 
 		player->transform.pos += player->transform.Forward() * speed * (float) elapsed_secs;
 
+		if (!player->can_shoot == 1)
+		{
+			player->reload -= elapsed_secs;
+			player->can_shoot = (player->reload < 0.f)? 1 : 0;
+		}
+
 		//if (player->up) player->transform.pos.z += 5.0f * (float)elapsed_secs;
 		//if (player->down) player->transform.pos.z -= 5.0f * (float)elapsed_secs;
 		//if (player->right) player->transform.pos.x -= 5.0f * (float)elapsed_secs;
 		//if (player->left) player->transform.pos.x += 5.0f * (float)elapsed_secs;
-		printf(" %d : { %f, %f } { %f } || ", player->id, player->transform.pos.x, player->transform.pos.z, player->transform.pos.y);
+		//printf(" %d : { %f, %f } { %f } || ", player->id, player->transform.pos.x, player->transform.pos.z, player->transform.pos.y);
 	}
-	printf("\n");
+	//printf("\n");
+
+	for (unsigned int i = 0; i < mProjectiles.size(); ++i)
+	{
+		Projectile* p = &mProjectiles[i];
+		if (p->state == 1)
+		{
+			p->duration -= elapsed_secs;
+			if (p->duration < 0)
+			{
+				p->state = 0;
+			}
+			p->pos += p->vel * (float)elapsed_secs;
+
+			for (unsigned int n = 0; n < numPlayersConnected; ++n)
+			{
+				ServerPlayer* player = &mPlayers[n];
+				if (glm::distance2(p->pos, glm::vec2(player->transform.pos.x, player->transform.pos.z)) < 1.1f)
+				{
+					player->is_alive = 0;
+					p->state = 0;
+					break;
+				}
+			}
+		}
+	}
+
 }
+
+
 
 void GameServer::BroadcastUpdate(void)
 {
@@ -182,22 +177,49 @@ void GameServer::BroadcastUpdate(void)
 	char buffer[SCENE_BUFFER_SIZE];
 	memset(buffer, '\0', DEFAULT_BUFLEN);
 
-	memcpy(&(buffer[0]), &numPlayersConnected, sizeof(unsigned int));
+	//int index = 4;
+	INIT_INDEX(4);
+
+	// space for client_id
+	//memcpy(&(buffer[index]), '\0', sizeof(unsigned int)); index += sizeof(unsigned int);
+
+	SET(state_id, unsigned int);
+	//memcpy(&(buffer[index]), &state_id, sizeof(unsigned int)); index += sizeof(unsigned int);
+	state_id++;
+
+	memcpy(&(buffer[index]), &numPlayersConnected, sizeof(unsigned int)); index += sizeof(unsigned int);
 
 
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
-		//float x = mPlayers[i].transform.pos.x;
-		//float z = mPlayers[i].transform.pos.z;
-		memcpy(&(buffer[i * 12 + 4]), &mPlayers[i].transform.pos.x, sizeof(float));
-		memcpy(&(buffer[i * 12 + 8]), &mPlayers[i].transform.pos.y, sizeof(float));
-		memcpy(&(buffer[i * 12 + 12]), &mPlayers[i].transform.pos.z, sizeof(float));
+		SET(mPlayers[i].is_alive, char);
+		SET(mPlayers[i].transform.pos.x, float);
+		SET(mPlayers[i].transform.pos.y, float);
+		SET(mPlayers[i].transform.pos.z, float);
+		//memcpy(&(buffer[index]), &mPlayers[i].is_alive, sizeof(char)); index += sizeof(char);
+		//memcpy(&(buffer[index]), &mPlayers[i].transform.pos.x, sizeof(float)); index += sizeof(float);
+		//memcpy(&(buffer[index]), &mPlayers[i].transform.pos.y, sizeof(float)); index += sizeof(float);
+		//memcpy(&(buffer[index]), &mPlayers[i].transform.pos.z, sizeof(float)); index += sizeof(float);
+	}
 
+	unsigned int size = mProjectiles.size();
+	SET(size, unsigned int);
+	//memcpy(&(buffer[index]), &size, sizeof(unsigned int)); index += sizeof(unsigned int);
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		SET(mProjectiles[i].state, char);
+		SET(mProjectiles[i].pos.x, float);
+		SET(mProjectiles[i].pos.y, float);
+		//memcpy(&(buffer[index]), &mProjectiles[i].state, sizeof(char)); index += sizeof(char);
+		//memcpy(&(buffer[index]), &mProjectiles[i].pos.x, sizeof(float)); index += sizeof(float);
+		//memcpy(&(buffer[index]), &mProjectiles[i].pos.y, sizeof(float)); index += sizeof(float);
 	}
 
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
-		//memcpy(&(buffer[index_offset]), &i, sizeof(int));
+		//SET(buffer[0], i, unsigned int);
+		memcpy(&(buffer[0]), &mPlayers[i].id, sizeof(unsigned int));
 		int result = sendto(mListenSocket, buffer, SCENE_BUFFER_SIZE, 0,
 			(struct sockaddr*) & (mPlayers[i].si_other), sizeof(mPlayers[i].si_other));
 	}
@@ -205,7 +227,7 @@ void GameServer::BroadcastUpdate(void)
 
 
 
-ServerPlayer* GetPlayerByPort(unsigned short port, struct sockaddr_in si_other)
+ServerPlayer* GameServer::GetPlayerByPort(unsigned short port, struct sockaddr_in si_other)
 {
 	// If a player with this port is already connected, return it
 	for (int i = 0; i < mPlayers.size(); i++)
@@ -254,10 +276,37 @@ void GameServer::ReadData(void)
 
 	ServerPlayer* player = GetPlayerByPort(port, si_other);
 
-	player->up = buffer[0] == 1;
-	player->down = buffer[1] == 1;
-	player->right = buffer[2] == 1;
-	player->left = buffer[3] == 1;
+	// Server reconciliation
+	unsigned int request = 0;
+	memcpy(&request, &(buffer[0]), sizeof(unsigned int));
+	if (request < player->request_id) return;
+
+	player->request_id = request;
+
+	player->up = buffer[4] == 1;
+	player->down = buffer[5] == 1;
+	player->right = buffer[6] == 1;
+	player->left = buffer[7] == 1;
+	if (buffer[8] == 1 && player->can_shoot == 1 && player->is_alive == 1)
+	{
+		mProjectiles.resize(mProjectiles.size() + 1);
+		glm::vec3 pos = player->transform.Forward();
+		mProjectiles[mProjectiles.size() - 1].vel = glm::vec2(pos.x, pos.z) * 5.f;
+		pos *= 1.3f;
+		pos.x += player->transform.pos.x;
+		pos.z += player->transform.pos.z;
+		mProjectiles[mProjectiles.size() - 1].pos = glm::vec2(pos.x, pos.z);
+
+		player->can_shoot = 0;
+		player->reload = 2.f;
+		printf("shot ball :O\n");
+	}
+	if (buffer[9] == 1 && player->is_alive == 0)
+	{
+		player->is_alive = 1;
+		player->can_shoot = 1;
+		player->transform = Transform();
+	}
 
 	//printf("%d : %hu received { %d %d %d %d }\n", player->id, port, player->up, player->down, player->right, player->left);
 	//printf("%d : %hu received { %d %d %d %d }\n", (int)mListenSocket, port, player->up, player->down, player->right, player->left);

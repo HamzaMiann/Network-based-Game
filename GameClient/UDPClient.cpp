@@ -12,17 +12,18 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iphlpapi.h>
-
-#pragma comment(lib, "Ws2_32.lib")
-
 #include <string>
 #include "Mathf.h"
 
+#pragma comment(lib, "Ws2_32.lib")
+
 using std::string;
+struct sockaddr_in si_other;
 
 #define PrintWSAError() _PrintWSAError(__FILE__, __LINE__)
-
-struct sockaddr_in si_other;
+#define SET(to, from, type) memcpy(&(to), &(from), sizeof(type)); index += sizeof(type)
+//#define SET(from, type) memcpy(&(buffer[index]), &from, sizeof(type)); index += sizeof(type)
+#define INIT_INDEX(start) int index = start
 
 void _PrintWSAError(const char* file, int line)
 {
@@ -123,53 +124,103 @@ void UDPClient::Recv(void)
 		return;
 	}
 
-	// NumPlayers
-	// Each player: { x, y }
-	unsigned int numPlayers;
-	//int index;
-	memcpy(&numPlayers, &(buffer[0]), sizeof(unsigned int));
-	//memcpy(&index, &(buffer[4]), sizeof(int));
+	//int index = 0;
+	INIT_INDEX(0);
 
-	//client_index = index;
+	unsigned int state = 0;
+	SET(client_id, buffer[index], unsigned int);
+	//memcpy(&client_id, &(buffer[index]), sizeof(unsigned int)); index += sizeof(unsigned int);
+
+	// Client-side reconciliation
+	SET(state, buffer[index], unsigned int);
+	//memcpy(&state, &(buffer[index]), sizeof(unsigned int)); index += sizeof(unsigned int);
+	if (state < state_id) return;
+	state_id = state;
+
+	memcpy(&numPlayers, &(buffer[index]), sizeof(unsigned int)); index += sizeof(unsigned int);
 
 	for (unsigned int i = 0; i < numPlayers; i++)
 	{
 		float x, y, z;
-		memcpy(&x, &(buffer[i * 12 + 4]), sizeof(float));
-		memcpy(&y, &(buffer[i * 12 + 8]), sizeof(float));
-		memcpy(&z, &(buffer[i * 12 + 12]), sizeof(float));
+		char is_alive;
+		SET(is_alive, buffer[index], char);
+		SET(x, buffer[index], float);
+		SET(y, buffer[index], float);
+		SET(z, buffer[index], float);
+		//memcpy(&is_alive, &(buffer[index]), sizeof(char)); index += sizeof(char);
+		//memcpy(&x, &(buffer[index]), sizeof(float)); index += sizeof(float);
+		//memcpy(&y, &(buffer[index]), sizeof(float)); index += sizeof(float);
+		//memcpy(&z, &(buffer[index]), sizeof(float)); index += sizeof(float);
 		players[i].x = x;
 		players[i].y = y;
 		players[i].z = z;
+		players[i].is_alive = is_alive;
+	}
+
+	unsigned int numProjectiles;
+	SET(numProjectiles, buffer[index], unsigned int);
+
+	bool newItems = false;
+
+	if (numProjectiles > projectiles.size())
+	{
+		projectiles.resize(numProjectiles);
+		newItems = true;
+	}
+
+	for (int i = 0; i < numProjectiles; ++i)
+	{
+		char is_active;
+		float x, z;
+		SET(is_active, buffer[index], char);
+		SET(x, buffer[index], float);
+		SET(z, buffer[index], float);
+		projectiles[i].pos = glm::vec3(x, 50.f, z);
+		projectiles[i].state = is_active;
+		if (projectiles[i].previousPos.x == 0.f)
+		{
+			projectiles[i].previousPos = projectiles[i].pos;
+		}
 	}
 
 	//unsigned short port = si_other.sin_port;
 	//printf("%d : %hu received %d bytes\n", mServerSocket, port, result);
 
-	printf("%d players: {", numPlayers);
+	/*printf("%d players: {", numPlayers);
 	for (unsigned int i = 0; i < numPlayers; i++)
 	{
 		printf(" {x: %.2f, y: %.2f}", players[i].x, players[i].z);
 	}
-	printf(" }\n");
+	printf(" }\n");*/
 }
 
 void UDPClient::Send(char* data, int numBytes)
 {
-	int result = sendto(mServerSocket, data, numBytes, 0,
+	char buffer[INPUT_BUFFER_SIZE];
+	memset(buffer, '\0', INPUT_BUFFER_SIZE);
+
+	memcpy(&(buffer[0]), &send_id, sizeof(unsigned int));
+	++send_id;
+
+	for (int i = 0; i < numBytes; ++i)
+	{
+		buffer[4 + i] = data[i];
+	}
+
+	int result = sendto(mServerSocket, buffer, INPUT_BUFFER_SIZE, 0,
 		(struct sockaddr*) & si_other, sizeof(si_other));
 
 	if (result == SOCKET_ERROR)
 	{
 		if (WSAGetLastError() == WSAEWOULDBLOCK) return;
 		PrintWSAError();
-		return;
+		exit(1);
 	}
 
 	if (result == 0)
 	{
 		printf("Disconnected...\n");
-		return;
+		exit(1);
 	}
 
 	// printf("Number of bytes sent: %d\n", result);

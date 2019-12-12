@@ -10,10 +10,7 @@
 
 glm::vec3 originalBallPosition = glm::vec3(0.0f, 6.0f, 0.0f);
 
-
-
-
-
+const glm::vec3 forward = glm::vec3(0.f, 0.f, 1.f);
 float ychange = 0.f, xchange = 0.f, zchange = 0.f;
 
 cPhysicsInputHandler::cPhysicsInputHandler(Scene& scene, GLFWwindow* window) : _scene(scene)
@@ -85,44 +82,73 @@ void cPhysicsInputHandler::HandleInput(GLFWwindow* window)
 	//ychange = Mathf::lerp(ychange, deltaY, 0.2f);
 
 	cLowpassFilter* filter = cLowpassFilter::Instance();
+	UDPClient* client = UDPClient::Instance();
 
-	char input[4];
+	char input[6];
 	input[0] = 0;
 	input[1] = 0;
 	input[2] = 0;
 	input[3] = 0;
+	input[4] = 0;
+	input[5] = 0;
 
-	if (glfwGetKey(window, GLFW_KEY_W))
-	{
-		//player->AddForce(forward * 1.f * speed);// *filter->delta_time());
-		//player->pos.z += filter->delta_time();
-		input[0] = 1;
-	}
-	if (glfwGetKey(window, GLFW_KEY_S))
-	{
-		//player->AddForce(forward * -1.f * speed);// * filter->delta_time());
-		//player->pos.z -= filter->delta_time();
-		input[1] = 1;
-	}
+	bool should_send = false;
+
+	unsigned int id = client->client_id;
+	
+	// rotation first
 	if (glfwGetKey(window, GLFW_KEY_D))
 	{
 		//player->AddForce(right * -0.5f);// * filter->delta_time());
 		//player->pos.x -= filter->delta_time();
 		input[2] = 1;
 		//xchange = Mathf::lerp(xchange, -90.f, filter->delta_time() * 90.f);
+		if (id != -1)
+		{
+			(*client->playerObjects)[id]->updateOrientation(glm::vec3(0.f, -90.f * filter->delta_time() * 2.f, 0.f));
+		}
 	}
-	else if (glfwGetKey(window, GLFW_KEY_A))
+	if (glfwGetKey(window, GLFW_KEY_A))
 	{
 		//player->AddForce(right * 0.5f);// * filter->delta_time());
 		//player->pos.x += filter->delta_time();
 		input[3] = 1;
 		//xchange = Mathf::lerp(xchange, 90.f, filter->delta_time() * 90.f);
+		if (id != -1)
+		{
+			(*client->playerObjects)[id]->updateOrientation(glm::vec3(0.f, 90.f * filter->delta_time() * 2.f, 0.f));
+		}
 	}
-	else
+
+	if (glfwGetKey(window, GLFW_KEY_W))
 	{
-		//xchange = 0.f;
-		//xchange = Mathf::lerp(xchange, 0.f, filter->delta_time() * 90.f);
+		//player->AddForce(forward * 1.f * speed);// *filter->delta_time());
+		//player->pos.z += filter->delta_time();
+		input[0] = 1;
+		if (id != -1)
+		{
+			(*client->playerObjects)[id]->pos += ((*client->playerObjects)[id]->getQOrientation() * forward) * filter->delta_time() * 1.f;
+		}
 	}
+	if (glfwGetKey(window, GLFW_KEY_S))
+	{
+		//player->AddForce(forward * -1.f * speed);// * filter->delta_time());
+		//player->pos.z -= filter->delta_time();
+		input[1] = 1;
+		if (id != -1)
+		{
+			(*client->playerObjects)[id]->pos += ((*client->playerObjects)[id]->getQOrientation() * -forward) * filter->delta_time() * 1.f;
+		}
+	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE))
+	{
+		input[4] = 1;
+	}
+	if (glfwGetKey(window, GLFW_KEY_R))
+	{
+		input[5] = 1;
+	}
+	
 	//if (glfwGetKey(window, GLFW_KEY_Q))
 	//{
 	//	xchange = 20.f;
@@ -141,9 +167,9 @@ void cPhysicsInputHandler::HandleInput(GLFWwindow* window)
 
 	player->pos.y = 50.f;
 
-	UDPClient::Instance()->Send(input, 4);
+	client->Send(input, 6);
 
-	player->updateOrientation(glm::vec3(0.f, xchange * 0.5f, 0.f));
+	//player->updateOrientation(glm::vec3(0.f, xchange * 0.5f, 0.f));
 
 	previousX = x;
 	previousY = y;
