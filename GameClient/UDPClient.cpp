@@ -117,9 +117,6 @@ void UDPClient::Recv(void)
 		}
 		PrintWSAError();
 
-		// For a TCP connection you would close this socket, and remove it from 
-		// your list of connections. For UDP we will clear our buffer, and just
-		// ignore this.
 		memset(buffer, '\0', SCENE_BUFFER_SIZE);
 		return;
 	}
@@ -129,14 +126,13 @@ void UDPClient::Recv(void)
 
 	unsigned int state = 0;
 	SET(client_id, buffer[index], unsigned int);
-	//memcpy(&client_id, &(buffer[index]), sizeof(unsigned int)); index += sizeof(unsigned int);
 
 	// Client-side reconciliation
 	SET(state, buffer[index], unsigned int);
-	//memcpy(&state, &(buffer[index]), sizeof(unsigned int)); index += sizeof(unsigned int);
 	if (state < state_id) return;
 	state_id = state;
 
+	// GET PLAYER DATA
 	memcpy(&numPlayers, &(buffer[index]), sizeof(unsigned int)); index += sizeof(unsigned int);
 
 	for (unsigned int i = 0; i < numPlayers; i++)
@@ -147,27 +143,21 @@ void UDPClient::Recv(void)
 		SET(x, buffer[index], float);
 		SET(y, buffer[index], float);
 		SET(z, buffer[index], float);
-		//memcpy(&is_alive, &(buffer[index]), sizeof(char)); index += sizeof(char);
-		//memcpy(&x, &(buffer[index]), sizeof(float)); index += sizeof(float);
-		//memcpy(&y, &(buffer[index]), sizeof(float)); index += sizeof(float);
-		//memcpy(&z, &(buffer[index]), sizeof(float)); index += sizeof(float);
 		players[i].x = x;
 		players[i].y = y;
 		players[i].z = z;
 		players[i].is_alive = is_alive;
 	}
 
+	// GET PROJECTILE DATA
+
 	unsigned int numProjectiles;
 	SET(numProjectiles, buffer[index], unsigned int);
-
-	bool newItems = false;
 
 	if (numProjectiles > projectiles.size())
 	{
 		projectiles.resize(numProjectiles);
-		newItems = true;
 	}
-
 	for (int i = 0; i < numProjectiles; ++i)
 	{
 		char is_active;
@@ -179,22 +169,9 @@ void UDPClient::Recv(void)
 		SET(vz, buffer[index], float);
 		projectiles[i].pos = glm::vec3(x, 50.f, z);
 		projectiles[i].state = is_active;
-		/*if (projectiles[i].previousPos.x == 0.f)
-		{
-			projectiles[i].previousPos = projectiles[i].pos;
-		}*/
 		projectiles[i].vel = glm::vec3(vx, 0.f, vz);
 	}
 
-	//unsigned short port = si_other.sin_port;
-	//printf("%d : %hu received %d bytes\n", mServerSocket, port, result);
-
-	/*printf("%d players: {", numPlayers);
-	for (unsigned int i = 0; i < numPlayers; i++)
-	{
-		printf(" {x: %.2f, y: %.2f}", players[i].x, players[i].z);
-	}
-	printf(" }\n");*/
 }
 
 void UDPClient::Send(char* data, int numBytes)

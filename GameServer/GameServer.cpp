@@ -113,7 +113,6 @@ void GameServer::UpdatePlayers(void)
 {
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
-
 		ServerPlayer* player = &mPlayers[i];
 
 		if (player->is_alive != 1) continue;
@@ -132,14 +131,7 @@ void GameServer::UpdatePlayers(void)
 			player->reload -= elapsed_secs;
 			player->can_shoot = (player->reload < 0.f)? 1 : 0;
 		}
-
-		//if (player->up) player->transform.pos.z += 5.0f * (float)elapsed_secs;
-		//if (player->down) player->transform.pos.z -= 5.0f * (float)elapsed_secs;
-		//if (player->right) player->transform.pos.x -= 5.0f * (float)elapsed_secs;
-		//if (player->left) player->transform.pos.x += 5.0f * (float)elapsed_secs;
-		//printf(" %d : { %f, %f } { %f } || ", player->id, player->transform.pos.x, player->transform.pos.z, player->transform.pos.y);
 	}
-	//printf("\n");
 
 	for (unsigned int i = 0; i < mProjectiles.size(); ++i)
 	{
@@ -177,35 +169,26 @@ void GameServer::BroadcastUpdate(void)
 	char buffer[SCENE_BUFFER_SIZE];
 	memset(buffer, '\0', DEFAULT_BUFLEN);
 
-	//int index = 4;
 	INIT_INDEX(4);
 
-	// space for client_id
-	//memcpy(&(buffer[index]), '\0', sizeof(unsigned int)); index += sizeof(unsigned int);
-
 	SET(state_id, unsigned int);
-	//memcpy(&(buffer[index]), &state_id, sizeof(unsigned int)); index += sizeof(unsigned int);
 	state_id++;
 
 	memcpy(&(buffer[index]), &numPlayersConnected, sizeof(unsigned int)); index += sizeof(unsigned int);
 
-
+	// SET PLAYER DATA
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
 		SET(mPlayers[i].is_alive, char);
 		SET(mPlayers[i].transform.pos.x, float);
 		SET(mPlayers[i].transform.pos.y, float);
 		SET(mPlayers[i].transform.pos.z, float);
-		//memcpy(&(buffer[index]), &mPlayers[i].is_alive, sizeof(char)); index += sizeof(char);
-		//memcpy(&(buffer[index]), &mPlayers[i].transform.pos.x, sizeof(float)); index += sizeof(float);
-		//memcpy(&(buffer[index]), &mPlayers[i].transform.pos.y, sizeof(float)); index += sizeof(float);
-		//memcpy(&(buffer[index]), &mPlayers[i].transform.pos.z, sizeof(float)); index += sizeof(float);
 	}
 
 	unsigned int size = mProjectiles.size();
 	SET(size, unsigned int);
-	//memcpy(&(buffer[index]), &size, sizeof(unsigned int)); index += sizeof(unsigned int);
 
+	// SET PROJECTILE DATA
 	for (unsigned int i = 0; i < size; i++)
 	{
 		SET(mProjectiles[i].state, char);
@@ -213,14 +196,11 @@ void GameServer::BroadcastUpdate(void)
 		SET(mProjectiles[i].pos.y, float);
 		SET(mProjectiles[i].vel.x, float);
 		SET(mProjectiles[i].vel.y, float);
-		//memcpy(&(buffer[index]), &mProjectiles[i].state, sizeof(char)); index += sizeof(char);
-		//memcpy(&(buffer[index]), &mProjectiles[i].pos.x, sizeof(float)); index += sizeof(float);
-		//memcpy(&(buffer[index]), &mProjectiles[i].pos.y, sizeof(float)); index += sizeof(float);
 	}
 
 	for (unsigned int i = 0; i < numPlayersConnected; i++)
 	{
-		//SET(buffer[0], i, unsigned int);
+		// Send the ID of the client along with the data
 		memcpy(&(buffer[0]), &mPlayers[i].id, sizeof(unsigned int));
 		int result = sendto(mListenSocket, buffer, SCENE_BUFFER_SIZE, 0,
 			(struct sockaddr*) & (mPlayers[i].si_other), sizeof(mPlayers[i].si_other));
@@ -236,16 +216,12 @@ ServerPlayer* GameServer::GetPlayerByPort(unsigned short port, struct sockaddr_i
 	{
 		if (mPlayers[i].port == port)
 		{
-			//printf("Player %d input\n", i);
 			return &(mPlayers[i]);
 		}
 	}
 
 	// Otherwise create a new player, and return that one!
-	//printf("New player!\n");
 	mPlayers[numPlayersConnected].port = port;
-	//mPlayers[numPlayersConnected].x = randInRange(-20, 20);
-	//mPlayers[numPlayersConnected].z = randInRange(-20, 20);
 	mPlayers[numPlayersConnected].si_other = si_other;
 	return &(mPlayers[numPlayersConnected++]);
 }
@@ -256,39 +232,38 @@ void GameServer::ReadData(void)
 	int slen = sizeof(si_other);
 	char buffer[INPUT_BUFFER_SIZE];
 
+	// Listen for data
 	int result = recvfrom(mListenSocket, buffer, INPUT_BUFFER_SIZE, 0, (struct sockaddr*) & si_other, &slen);
 	if (result == SOCKET_ERROR)
 	{
 		if (WSAGetLastError() == WSAEWOULDBLOCK)
 		{
-			// printf(".");		// Quick test
 			return;
 		}
 		PrintWSAError();
 
-		// For a TCP connection you would close this socket, and remove it from 
-		// your list of connections. For UDP we will clear our buffer, and just
-		// ignore this.
 		memset(buffer, '\0', INPUT_BUFFER_SIZE);
 		return;
 	}
 
 
+	// Get the ID of the sender
 	unsigned short port = si_other.sin_port;
-
 	ServerPlayer* player = GetPlayerByPort(port, si_other);
 
 	// Server reconciliation
 	unsigned int request = 0;
 	memcpy(&request, &(buffer[0]), sizeof(unsigned int));
 	if (request < player->request_id) return;
-
 	player->request_id = request;
 
+	// KEY INPUT
 	player->up = buffer[4] == 1;
 	player->down = buffer[5] == 1;
 	player->right = buffer[6] == 1;
 	player->left = buffer[7] == 1;
+
+	// SHOOT KEY
 	if (buffer[8] == 1 && player->can_shoot == 1 && player->is_alive == 1)
 	{
 		mProjectiles.resize(mProjectiles.size() + 1);
@@ -301,8 +276,9 @@ void GameServer::ReadData(void)
 
 		player->can_shoot = 0;
 		player->reload = 2.f;
-		printf("shot ball :O\n");
 	}
+
+	// RESPAWN KEY
 	if (buffer[9] == 1 && player->is_alive == 0)
 	{
 		player->is_alive = 1;
@@ -310,10 +286,5 @@ void GameServer::ReadData(void)
 		player->transform = Transform();
 	}
 
-	//printf("%d : %hu received { %d %d %d %d }\n", player->id, port, player->up, player->down, player->right, player->left);
-	//printf("%d : %hu received { %d %d %d %d }\n", (int)mListenSocket, port, player->up, player->down, player->right, player->left);
-
-	// Send the data back to the client
-	// result = sendto(mListenSocket, buffer, 1, 0, (struct sockaddr*) & si_other, sizeof(si_other));
 }
 

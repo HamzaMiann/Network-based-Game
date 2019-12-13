@@ -391,6 +391,9 @@ int main(void)
 		// **************************************************
 
 
+		//-------------------------------------------------
+		// PLAYERS AND NETWORK PROCESSING
+		//-------------------------------------------------
 		for (int index = 0; index < network_client->numPlayers; ++index)
 		{
 			if (network_client->players[index].is_alive == 0) continue;
@@ -413,14 +416,6 @@ int main(void)
 				glUseProgram(shaderProgID);
 				lastShader = shaderProgID;
 			}
-
-			/*if (objPtr->tag == "player")
-			{
-				glm::mat4 model = objPtr->ModelMatrix();
-				light1->position = model * glm::vec4(ship->CollidePoints[0], 1.f);
-				light2->position = model * glm::vec4(ship->CollidePoints[1], 1.f);
-				pEffect.pos = ((light2->position - light1->position) / 2.f) + light1->position;
-			}*/
 
 			DrawObject(objPtr, ratio, v, p);
 		}
@@ -449,7 +444,6 @@ int main(void)
 			Projectile* projectile = &network_client->projectiles[index];
 			if (projectile->state == 1)
 			{
-				//projectile->previousPos = Mathf::lerp(projectile->previousPos, projectile->pos, delta_time * 2.f);
 				projectile->pos += projectile->vel * delta_time;
 				sphere->pos = projectile->pos;
 				DrawObject(sphere, ratio, v, p);
