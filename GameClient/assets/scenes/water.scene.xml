@@ -39,20 +39,9 @@
 		<Texture name="Fighter_Ship_body_diffuse.bmp"/>
 		<Texture name="WhatTheWhat.bmp"/>
 		<Texture name="Fighter_Ship_wings_diffuse.bmp"/>
-		<Texture name="Ground_Dirt_007_basecolor.bmp"/>
-		<Texture name="Ground_Dirt_007_roughness.bmp"/>
-		<Texture name="Ground_Dirt_007_normal.bmp"/>
-		<Texture name="Ground_Dirt_007_ambientOcclusion.bmp"/>
 		<Texture name="Halo_Roughtness.bmp"/>
 		<Texture name="13736_Halo_Albedo.bmp"/>
 		<Texture name="fx3_Panels_Color.bmp"/>
-		<Texture name="Mercury_Diffuse.bmp"/>
-		<Texture name="Mercury_Bump.bmp"/>
-		<Texture name="Water_001_COLOR.bmp"/>
-		<Texture name="Water_001_DISP.bmp"/>
-		<Texture name="Water_001_NORM.bmp"/>
-		<Texture name="Water_001_SPEC.bmp"/>
-		<Texture name="WATER_BUMP.bmp"/>
 	</Textures>
   
 	<Models>
@@ -60,12 +49,7 @@
 		<Model file="sphere_XYZ_N_UV.ply" friendlyName="sphere_static" shader="hologram"/>
 		<Model file="sphere_XYZ_N_UV.ply" friendlyName="sphere_particle" shader="particle"/>
 		<Model file="cube_XYZ_N_UV.ply" friendlyName="cube" shader="basic"/>
-		<!--<Model file="Terrain_XYZ_n_uv.ply" friendlyName="terrain" shader="specular"/>-->
-		<Model file="Halo_Ring2_XYZ_N_UV.ply" friendlyName="halo_ring" shader="basic"/>
 		<Model file="13897_Sci-Fi_Fighter_Ship_v1_l1.ply" friendlyName="ship" shader="basic"/>
-		<!--<Model file="low poly buildings_XYZ_N_UV.ply" friendlyName="buildings" shader="basic"/>-->
-		<!--<Model file="low poly buildings2_XYZ_N_UV.ply" friendlyName="buildings2" shader="basic"/>-->
-		<!--<Model file="Mercury_XYZ_N_UV.ply" friendlyName="mercury" shader="bump"/>-->
 	</Models>
   
 	<Lights>
