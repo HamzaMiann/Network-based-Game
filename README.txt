@@ -1,6 +1,8 @@
 @author		Hamza Mian, Brandon Becker
 @project	UDP Network-based real-time game
 
+Demo: https://youtu.be/pRhGwifDCJE
+
 Build Instructions:
 	- Select the proper platform toolset and Windows SDK for your system
 	- Please only build in x64 and Release Configuration
